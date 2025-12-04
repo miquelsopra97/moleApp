@@ -1,4 +1,4 @@
-import{i as g,n as c,a as h,x as u,t as _,r as d}from"./index-86WSmwjV.js";import{P as v}from"./page-layout-Jo7TGz61.js";import{P as y}from"./game-button-5-IybG1D.js";const $=g`
+import{i as g,n as c,a as h,x as u,t as _,r as d}from"./index-CIOabpnB.js";import{P as v}from"./page-layout-DUF6-2Qa.js";import{P as y}from"./game-button-DtffnvqY.js";const $=g`
   :host {
     display: block;
     margin-bottom: 1rem;
