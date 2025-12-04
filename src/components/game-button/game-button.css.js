@@ -12,7 +12,7 @@ export const styles = css`
     background: #7a5f3e;
     color: #fff;
     border: none;
-    border-radius: 8px;
+    border-radius: 0.5rem; /* 8px */
 
     font-size: 1rem;
     font-weight: 600;
@@ -38,12 +38,22 @@ export const styles = css`
   }
 
   button.back {
-    width: 40px;
-    height: 40px;
+    width: 2.5rem;
+    height: 2.5rem;
     padding: 0;
     border-radius: 50%;
-    font-size: 20px;
-    line-height: 40px;
+    font-size: 1.25rem;
+    line-height: 2.5rem;
     text-align: center;
+  }
+
+  button.back .icon {
+    display: inline-flex;
+  }
+
+  button.back .icon ::slotted(svg) {
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-top: 0.625rem;
   }
 `;

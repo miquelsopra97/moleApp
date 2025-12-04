@@ -27,10 +27,17 @@ export class GameButton extends LitElement {
   }
 
   render() {
+    const isBack = this.variant === MoleButtonVariant.BACK
     return html`
       <button class=${this.variant} ?disabled=${this.disabled} @click=${this._onClick}>
-        ${this.text}
-      </button>
+        ${isBack
+          ? html`
+              <span class="icon">
+                <slot name="icon"></slot>
+              </span>
+            `
+          : null}
+        <span class="label">${this.text}</span>      </button>
     `;
   }
 }
