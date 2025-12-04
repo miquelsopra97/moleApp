@@ -11,6 +11,7 @@ export class MoleButton extends LitElement {
   @property({ type: Boolean }) active = false;
 
   private _onClick() {
+    this.active && navigator.vibrate?.(40);
     this.dispatchEvent(
       new CustomEvent('mole-hit', {
         detail: { active: this.active },
