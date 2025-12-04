@@ -1,0 +1,1 @@
+function a(r,s){const e=JSON.parse(localStorage.getItem("scores")||"[]"),o=e.find(t=>t.name===r);o?s>o.score&&(o.score=s):e.push({name:r,score:s}),e.sort((t,c)=>c.score-t.score),localStorage.setItem("scores",JSON.stringify(e))}function n(){return JSON.parse(localStorage.getItem("scores")||"[]")}export{n as g,a as s};

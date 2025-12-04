@@ -12,7 +12,6 @@ package-lock.json
 # ============================
 # BUILD / DIST / TYPES
 # ============================
-dist/
 build/
 out/
 types/
