@@ -5,15 +5,15 @@ import moleImg from '../../../public/images/TopoMontySMP.png';
 
 @customElement('mole-button')
 export class MoleButton extends LitElement {
-  static styles = styles;
+  static readonly styles = styles;
 
   @property({ type: Boolean }) active = false;
 
-private hitSound = new Audio(`${import.meta.env.BASE_URL}sounds/hitmole.mp3`);
+private readonly hitSound = new Audio(`${import.meta.env.BASE_URL}sounds/hitmole.mp3`);
 
   private _onClick() {
     if (this.active) {
-      navigator.vibrate?.(40);
+      navigator.vibrate?.(80);
       this.hitSound.currentTime = 0;
       this.hitSound.play();
     }

@@ -9,7 +9,7 @@ export class PageLayout extends LitElement {
 
   private _scroller: HTMLElement | undefined | null = null;
 
-  static styles = styles;
+  static readonly styles = styles;
 
   firstUpdated(props: any) {
     super.firstUpdated(props);

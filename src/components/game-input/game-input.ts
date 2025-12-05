@@ -4,7 +4,7 @@ import { styles } from './game-input.css.js';
 
 @customElement('game-input')
 export class GameInput extends LitElement {
-  static styles = styles;
+  static readonly styles = styles;
 
   @property({ type: String }) label = '';
 
@@ -15,7 +15,7 @@ export class GameInput extends LitElement {
   @property({ type: String }) error: string | null = null;
 
   private _sanitize(value: string): string {
-    return value.replace(/[^a-zA-Z0-9 ]/g, '');
+    return value.replaceAll(/[^a-zA-Z0-9 ]/g, '');
   }
 
   private _onInput(e: Event) {

@@ -9,7 +9,7 @@ export const styles = css`
   }
 
   main {
-    min-height: 100vh;
+    min-height: auto;
   }
 
   .header {

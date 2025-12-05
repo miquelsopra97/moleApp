@@ -1,4 +1,4 @@
-import{i as g,n as m,a as d,x as n,t as h,r as _}from"./index-CJNkyyjE.js";import{P as v}from"./page-layout-CfvpH8Ss.js";import{P as y}from"./game-button-DZQmMp36.js";const $=g`
+import{i as g,n as m,a as d,x as n,t as h,r as _}from"./index-DAi4Xyat.js";import{P as v}from"./PageTransitionsMixin-C3JExxZE.js";import{P as y}from"./game-button-C2l3PFRC.js";const $=g`
   :host {
     display: block;
     margin-bottom: 1rem;
@@ -34,7 +34,7 @@ import{i as g,n as m,a as d,x as n,t as h,r as _}from"./index-CJNkyyjE.js";impor
   }
 
   .field__control:focus {
-    border-color: #7a5f3e; /* mismo tono que el botón */
+    border-color: #7a5f3e;
     box-shadow: 0 0 0 2px rgba(122, 95, 62, 0.25);
     background: #fff8ee;
   }
@@ -50,7 +50,7 @@ import{i as g,n as m,a as d,x as n,t as h,r as _}from"./index-CJNkyyjE.js";impor
     font-size: 0.8rem;
     color: #b44a3c;
   }
-`;var x=Object.defineProperty,P=Object.getOwnPropertyDescriptor,p=(e,t,a,o)=>{for(var r=o>1?void 0:o?P(t,a):t,l=e.length-1,s;l>=0;l--)(s=e[l])&&(r=(o?s(t,a,r):s(r))||r);return o&&r&&x(t,a,r),r};let i=class extends d{constructor(){super(...arguments),this.label="",this.placeholder="",this.value="",this.error=null}_sanitize(e){return e.replace(/[^a-zA-Z0-9 ]/g,"")}_onInput(e){const t=e.target,a=this._sanitize(t.value);this.value=a,this.dispatchEvent(new CustomEvent("game-input",{detail:{value:this.value},bubbles:!0,composed:!0}))}render(){return n`
+`;var x=Object.defineProperty,P=Object.getOwnPropertyDescriptor,p=(e,r,a,o)=>{for(var t=o>1?void 0:o?P(r,a):r,l=e.length-1,s;l>=0;l--)(s=e[l])&&(t=(o?s(r,a,t):s(t))||t);return o&&t&&x(r,a,t),t};let i=class extends d{constructor(){super(...arguments),this.label="",this.placeholder="",this.value="",this.error=null}_sanitize(e){return e.replaceAll(/[^a-zA-Z0-9 ]/g,"")}_onInput(e){const r=e.target,a=this._sanitize(r.value);this.value=a,this.dispatchEvent(new CustomEvent("game-input",{detail:{value:this.value},bubbles:!0,composed:!0}))}render(){return n`
       <label class="field">
         ${this.label?n`<span class="field__label">${this.label}</span>`:null}
 
@@ -81,7 +81,7 @@ import{i as g,n as m,a as d,x as n,t as h,r as _}from"./index-CJNkyyjE.js";impor
     width: 280px;
     margin: auto;
   }
-`;var O=Object.defineProperty,S=Object.getOwnPropertyDescriptor,f=(e,t,a,o)=>{for(var r=o>1?void 0:o?S(t,a):t,l=e.length-1,s;l>=0;l--)(s=e[l])&&(r=(o?s(t,a,r):s(r))||r);return o&&r&&O(t,a,r),r};let u=class extends d{constructor(){super(...arguments),this._value="",this._error=null}_onInput(e){this._value=e.detail.value,this._error&&this._value.trim().length>0&&(this._error=null)}_onSubmit(){const e=this._value.trim();if(!e){this._error="Por favor introduce un nombre válido.";return}this.dispatchEvent(new CustomEvent("form-submit",{detail:{value:e},bubbles:!0,composed:!0}))}_goToScore(){this.dispatchEvent(new CustomEvent("go-score",{bubbles:!0,composed:!0}))}render(){return n`
+`;var O=Object.defineProperty,S=Object.getOwnPropertyDescriptor,f=(e,r,a,o)=>{for(var t=o>1?void 0:o?S(r,a):r,l=e.length-1,s;l>=0;l--)(s=e[l])&&(t=(o?s(r,a,t):s(t))||t);return o&&t&&O(r,a,t),t};let u=class extends d{constructor(){super(...arguments),this._value="",this._error=null}_onInput(e){this._value=e.detail.value,this._error&&this._value.trim().length>0&&(this._error=null)}_onSubmit(){const e=this._value.trim();if(!e){this._error="Por favor introduce un nombre válido.";return}this.dispatchEvent(new CustomEvent("form-submit",{detail:{value:e},bubbles:!0,composed:!0}))}_goToScore(){this.dispatchEvent(new CustomEvent("go-score",{bubbles:!0,composed:!0}))}render(){return n`
       <div class="form-container">
         <game-input
           label="Nombre del jugador"
@@ -94,7 +94,7 @@ import{i as g,n as m,a as d,x as n,t as h,r as _}from"./index-CJNkyyjE.js";impor
         <game-button text="Empezar juego" @game-click=${this._onSubmit}></game-button>
         <game-button text="Ver puntuaciones" @game-click=${this._goToScore}></game-button>
       </div>
-    `}};u.styles=w;f([_()],u.prototype,"_value",2);f([_()],u.prototype,"_error",2);u=f([h("form-game")],u);var j=Object.defineProperty,E=Object.getOwnPropertyDescriptor,b=(e,t,a,o)=>{for(var r=o>1?void 0:o?E(t,a):t,l=e.length-1,s;l>=0;l--)(s=e[l])&&(r=(o?s(t,a,r):s(r))||r);return o&&r&&j(t,a,r),r};let c=class extends v(y(d)){constructor(){super(...arguments),this._layout=null,this._playerName="",this._error=null}firstUpdated(e){var t;(t=super.firstUpdated)==null||t.call(this,e),this._layout=this.renderRoot.querySelector("page-layout")}_startGame(e){const t=e.detail.value;localStorage.setItem("playerName",t),this.publish("player-name",t),this.navigate("game",{playerName:t})}render(){return n`
+    `}};u.styles=w;f([_()],u.prototype,"_value",2);f([_()],u.prototype,"_error",2);u=f([h("form-game")],u);var j=Object.defineProperty,E=Object.getOwnPropertyDescriptor,b=(e,r,a,o)=>{for(var t=o>1?void 0:o?E(r,a):r,l=e.length-1,s;l>=0;l--)(s=e[l])&&(t=(o?s(r,a,t):s(t))||t);return o&&t&&j(r,a,t),t};let c=class extends v(y(d)){constructor(){super(...arguments),this._layout=null,this._playerName="",this._error=null}firstUpdated(e){var r;(r=super.firstUpdated)==null||r.call(this,e),this._layout=this.renderRoot.querySelector("page-layout")}_startGame(e){const r=e.detail.value;localStorage.setItem("playerName",r),this.publish("player-name",r),this.navigate("game",{playerName:r})}render(){return n`
       <page-layout>
         <form-game @form-submit=${this._startGame} @go-score=${()=>this.navigate("score")}></form-game>
       </page-layout>

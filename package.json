@@ -15,7 +15,8 @@
     "test:watch": "vitest",
     "prepare": "husky install",
     "lint": "eslint . --ext .ts,.js",
-    "sonar": "vitest --coverage --run && npx sonarqube-scanner"
+    "sonar": "vitest --coverage --run && npx sonarqube-scanner",
+    "coverage:open": "vitest --coverage && open coverage/lcov-report/index.html"
   },
   "lint-staged": {
     "*.{js,ts}": [

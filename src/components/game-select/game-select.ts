@@ -5,11 +5,11 @@ import { DifficultyLevel } from '../../models/enums/game-select.enum.js'
 
 @customElement('select-game')
 export class SelectGame extends LitElement {
-  static styles = styles;
+  static readonly styles = styles;
 
   @property({ type: String }) value: DifficultyLevel = DifficultyLevel.LOW;
 
-  private onChange = (e: Event) => {
+  private readonly onChange = (e: Event) => {
   const val = (e.target as HTMLSelectElement).value as DifficultyLevel;
     this.value = val;
 

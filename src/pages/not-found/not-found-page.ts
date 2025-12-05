@@ -4,7 +4,6 @@ import { PageTransitionsMixin } from '@open-cells/page-transitions';
 import { customElement } from 'lit/decorators.js';
 import '@material/web/button/outlined-button.js';
 import '@material/web/icon/icon.js';
-import '../../components/page-layout/page-layout.js';
 import { PageLayout } from '../../components/page-layout/page-layout.js';
 
 // @ts-ignore

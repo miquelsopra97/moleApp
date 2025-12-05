@@ -5,7 +5,7 @@ import { MoleButtonVariant } from '../../models/enums/game-button.enum.js';
 
 @customElement('game-button')
 export class GameButton extends LitElement {
-  static styles = styles;
+  static readonly styles = styles;
 
   @property({ type: String }) text = '';
 

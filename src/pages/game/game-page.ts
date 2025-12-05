@@ -21,10 +21,10 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
   @state() protected _playerName = '';
   @state() protected _score = 0;
   @state() private _isPlaying = false;
-  @state() private _activeMoles: boolean[] = Array(SIZES_MOLETABLE * SIZES_MOLETABLE).fill(false);
+  @state() private _activeMoles: boolean[] = new Array(SIZES_MOLETABLE * SIZES_MOLETABLE).fill(false);
   @state() private _intervalId: number | null = null;
 
-  @state() private level: 'Low' | 'Medium' | 'High' = 'High';
+  @state() private level: DifficultyLevel = DifficultyLevel.LOW;
 
   firstUpdated(props: any) {
     super.firstUpdated?.(props);
@@ -95,7 +95,7 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
 
       setTimeout(() => {
         if (this._isPlaying) {
-          this._activeMoles = Array(9).fill(false);
+          this._activeMoles = new Array(9).fill(false);
         }
       }, hideTime);
     }, interval);
@@ -118,7 +118,7 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
     }
 
     this._score = 0;
-    this._activeMoles = Array(SIZES_MOLETABLE * SIZES_MOLETABLE).fill(false);
+    this._activeMoles = new Array(SIZES_MOLETABLE * SIZES_MOLETABLE).fill(false);
     this.navigate('home');
   }
 

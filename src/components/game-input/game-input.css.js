@@ -36,7 +36,7 @@ export const styles = css`
   }
 
   .field__control:focus {
-    border-color: #7a5f3e; /* mismo tono que el botón */
+    border-color: #7a5f3e;
     box-shadow: 0 0 0 2px rgba(122, 95, 62, 0.25);
     background: #fff8ee;
   }

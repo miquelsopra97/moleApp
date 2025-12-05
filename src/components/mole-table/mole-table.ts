@@ -7,7 +7,7 @@ import { SIZES_MOLETABLE } from '../../config/mole-config.config.js';
 
 @customElement('mole-table')
 export class MoleTable extends LitElement {
-  static styles = styles;
+  static readonly styles = styles;
 
   @property({ type: Number }) size = SIZES_MOLETABLE;
 
@@ -33,7 +33,7 @@ export class MoleTable extends LitElement {
   render() {
     return html`
       <div class="grid" style="grid-template-columns: repeat(${this.size}, 1fr);">
-        ${[...Array(this._totalCells).keys()].map(index => {
+        ${[...new Array(this._totalCells).keys()].map(index => {
           const isActive = this.activeMoles?.[index] ?? false;
           return html`
             <mole-button

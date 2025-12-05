@@ -22,14 +22,14 @@ startApp({
 
 @customElement('app-index')
 export class AppIndex extends LitElement {
-  private controller = new ElementController(this);
+  private readonly controller = new ElementController(this);
   private headerEl: HTMLElement | null = null;
 
-  static styles = styles;
+  static readonly styles = styles;
 
   @state() private currentRoute = this.getRoute();
   @state() private playerName = '';
-  @state() private level: DifficultyLevel = DifficultyLevel.HIGH;
+  @state() private level: DifficultyLevel = DifficultyLevel.LOW;
 
   connectedCallback() {
     super.connectedCallback();
@@ -52,11 +52,11 @@ export class AppIndex extends LitElement {
       localStorage.setItem('playerName', name);
     });
 
-    window.addEventListener('hashchange', this.onHashChange);
+    globalThis.addEventListener('hashchange', this.onHashChange);
   }
 
   disconnectedCallback() {
-    window.removeEventListener('hashchange', this.onHashChange);
+    globalThis.removeEventListener('hashchange', this.onHashChange);
     this.controller.unsubscribe('scroll');
     this.controller.unsubscribe('player-name');
     super.disconnectedCallback();
@@ -66,17 +66,17 @@ export class AppIndex extends LitElement {
     this.headerEl = this.shadowRoot?.querySelector('header') ?? null;
   }
 
-  private onHashChange = () => {
+  private readonly onHashChange = () => {
     this.currentRoute = this.getRoute();
   };
 
   private getRoute() {
-    const hash = window.location.hash || '';
-    const match = hash.match(/^#!\/([^?]*)/);
+    const hash = globalThis.location.hash || '';
+    const match = new RegExp(/^#!\/([^?]*)/).exec(hash);
     return match?.[1] || 'home';
   }
 
-  private onLevelChange = (e: CustomEvent) => {
+  private readonly onLevelChange = (e: CustomEvent) => {
     const value = e.detail.value as 'Low' | 'Medium' | 'High';
     this.level = value as DifficultyLevel;
     this.controller.publish('game-level', value);
