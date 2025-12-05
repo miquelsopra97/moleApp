@@ -13,7 +13,7 @@ import {
   SIZES_MOLETABLE,
 } from '../../config/mole-config.config.js';
 import { saveScore } from '../../config/score-config.config.js';
-import { DifficultyLevel } from '../../models/enums/level-dificulty.enum.js';
+import { DifficultyLevel } from '../../models/enums/game-select.enum.js';
 
 // @ts-ignore
 @customElement('game-page')

@@ -1,13 +1,13 @@
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { styles } from './game-select.css.js';
-import { DifficultyLevel } from '../../models/enums/level-dificulty.enum.js'
+import { DifficultyLevel } from '../../models/enums/game-select.enum.js'
 
 @customElement('select-game')
 export class SelectGame extends LitElement {
   static styles = styles;
 
-  @property({ type: String }) value: DifficultyLevel = DifficultyLevel.HIGH;
+  @property({ type: String }) value: DifficultyLevel = DifficultyLevel.LOW;
 
   private onChange = (e: Event) => {
   const val = (e.target as HTMLSelectElement).value as DifficultyLevel;

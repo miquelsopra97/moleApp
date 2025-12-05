@@ -7,7 +7,7 @@ import { styles } from './app-index.css.js';
 import '@open-cells/page-transitions/page-transition-head-styles.js';
 import './game-select/game-select.js';
 import { globalFontCSS } from '../styles/global-styles.css.js';
-import { DifficultyLevel } from '../models/enums/level-dificulty.enum.js'
+import { DifficultyLevel } from '../models/enums/game-select.enum.js'
 
 
 document.adoptedStyleSheets = [...document.adoptedStyleSheets, globalFontCSS];

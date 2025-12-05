@@ -14,8 +14,6 @@ export class GameInput extends LitElement {
 
   @property({ type: String }) error: string | null = null;
 
-  @property({ type: Boolean }) disabled = false;
-
   private _sanitize(value: string): string {
     return value.replace(/[^a-zA-Z0-9 ]/g, '');
   }
@@ -44,8 +42,8 @@ export class GameInput extends LitElement {
           type="text"
           .value=${this.value}
           placeholder=${this.placeholder}
-          ?disabled=${this.disabled}
           @input=${this._onInput}
+          required
         />
 
         ${this.error ? html`<span class="field__error">${this.error}</span>` : null}
