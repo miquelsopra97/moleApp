@@ -143,7 +143,7 @@ describe('app-index', () => {
 
     expect(publishMock).toHaveBeenCalledWith('game-level', 'Medium');
   });
-
+  
   it('removes subscriptions and hash listener on disconnectedCallback', async () => {
     await create();
     el.remove();
