@@ -21,10 +21,14 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
   @state() protected _playerName = '';
   @state() protected _score = 0;
   @state() private _isPlaying = false;
-  @state() private _activeMoles: boolean[] = new Array(SIZES_MOLETABLE * SIZES_MOLETABLE).fill(false);
+  @state() private _activeMoles: boolean[] = new Array(SIZES_MOLETABLE * SIZES_MOLETABLE).fill(
+    false,
+  );
   @state() private _intervalId: number | null = null;
-
   @state() private level: DifficultyLevel = DifficultyLevel.LOW;
+  @state() private _timeLeft: number = 60;
+
+  private _timerId: number | null = null;
 
   firstUpdated(props: any) {
     super.firstUpdated?.(props);
@@ -66,19 +70,30 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
     }
   }
 
+  private _clearTimer() {
+    if (this._timerId) {
+      clearInterval(this._timerId);
+      this._timerId = null;
+    }
+  }
+
   private _saveHighScore() {
     saveScore(this._playerName, this._score);
   }
 
-  private _toggleGame() {
+  private _controllerGame() {
     this._isPlaying = !this._isPlaying;
 
     if (this._isPlaying) {
       this._score = 0;
+      this._timeLeft = 60;
+      this._clearTimer();
       this._startLoop();
+      this._startTimer();
     } else {
       this._saveHighScore();
       this._stopLoop();
+      this._clearTimer();
     }
   }
 
@@ -107,6 +122,19 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
       this._intervalId = null;
     }
     this._activeMoles = [];
+  }
+  private _startTimer() {
+    this._clearTimer();
+    this._timerId = window.setInterval(() => {
+      this._timeLeft--;
+      if (this._timeLeft <= 0) {
+        this._isPlaying = false;
+        this._stopLoop();
+        this._saveHighScore();
+        this._clearTimer();
+      }
+      this.requestUpdate();
+    }, 1000);
   }
 
   private _goBack() {
@@ -143,6 +171,7 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
             </svg>
           </game-button>
           <h3>Puntuación: ${this._score}</h3>
+          <h4>Tiempo: ${this._timeLeft}s</h4>
           <mole-table
             size=${SIZES_MOLETABLE}
             .activeMoles=${this._activeMoles}
@@ -150,7 +179,7 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
           ></mole-table>
           <game-button
             text="${this._isPlaying ? 'Parar partida' : 'Empezar partida'}"
-            @game-click=${this._toggleGame}
+            @game-click=${this._controllerGame}
           ></game-button>
         </div>
       </page-layout>
