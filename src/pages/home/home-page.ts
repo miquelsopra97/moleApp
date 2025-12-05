@@ -13,8 +13,6 @@ import { PageLayout } from '../../components/page-layout/page-layout.js';
 // @ts-ignore
 @customElement('home-page')
 export class HomePage extends PageTransitionsMixin(PageMixin(LitElement)) {
-  private _layout: PageLayout | null = null;
-
   @state()
   protected _playerName: string = '';
 
@@ -36,12 +34,11 @@ export class HomePage extends PageTransitionsMixin(PageMixin(LitElement)) {
   render() {
     return html`
       <page-layout>
-        <form-game @form-submit=${this._startGame} @go-score=${() => this.navigate('score')}></form-game>
+        <form-game
+          @form-submit=${this._startGame}
+          @go-score=${() => this.navigate('score')}
+        ></form-game>
       </page-layout>
     `;
-  }
-
-  onPageLeave() {
-    this._layout?.resetScroll();
   }
 }

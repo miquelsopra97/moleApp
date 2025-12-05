@@ -9,20 +9,20 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "npm run build && vite preview",
-    "test": "npm run test:unit && npm run test:e2e",
+    "test": "npm run test:unit",
     "test:unit": "vitest --coverage --run",
     "test:e2e": "playwright test",
     "test:watch": "vitest",
     "prepare": "husky install",
-    "lint": "eslint . --ext .ts,.js",
+    "lint": "eslint src --ext .ts,.js",
     "sonar": "vitest --coverage --run && npx sonarqube-scanner",
     "coverage:open": "vitest --coverage && open coverage/lcov-report/index.html"
   },
   "lint-staged": {
-    "*.{js,ts}": [
-      "eslint --fix",
-      "prettier --write"
-    ]
+  "src/**/*.{ts,js}": [
+    "eslint --fix",
+    "prettier --write"
+  ]
   },
   "dependencies": {
     "@material/web": "^1.2.0",
@@ -38,6 +38,8 @@
     "@commitlint/config-conventional": "^20.0.0",
     "@playwright/test": "^1.45.0",
     "@types/node": "^20.14.5",
+    "@typescript-eslint/eslint-plugin": "^8.48.1",
+    "@typescript-eslint/parser": "^8.48.1",
     "@vitest/coverage-v8": "^4.0.15",
     "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",

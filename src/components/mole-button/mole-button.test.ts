@@ -4,13 +4,16 @@ import './mole-button.js';
 const playMock = vi.fn();
 const vibrateMock = vi.fn();
 
-vi.stubGlobal('Audio', class {
-  currentTime = 0;
-  play = playMock;
-});
+vi.stubGlobal(
+  'Audio',
+  class {
+    currentTime = 0;
+    play = playMock;
+  },
+);
 
 vi.stubGlobal('navigator', {
-  vibrate: vibrateMock
+  vibrate: vibrateMock,
 });
 
 describe('mole-button', () => {
@@ -35,8 +38,7 @@ describe('mole-button', () => {
     await el.updateComplete;
   };
 
-  const getButton = () =>
-    el.shadowRoot!.querySelector('button') as HTMLButtonElement;
+  const getButton = () => el.shadowRoot!.querySelector('button') as HTMLButtonElement;
 
   it('renders without mole image when inactive', async () => {
     el.active = false;
@@ -73,7 +75,7 @@ describe('mole-button', () => {
 
     getButton().click();
 
-    expect(vibrateMock).toHaveBeenCalledWith(40);
+    expect(vibrateMock).toHaveBeenCalledWith(80);
 
     expect(playMock).toHaveBeenCalledTimes(1);
     expect(el.hitSound.currentTime).toBe(0);

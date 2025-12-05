@@ -7,6 +7,7 @@ export default defineConfig({
   },
   test: {
     environment: 'happy-dom',
+     setupFiles: ['./src/test/mocks/open-cells-mock.ts'],
     coverage: {
       provider: 'v8',
       reporter: ['lcov', 'html'],

@@ -1,0 +1,8 @@
+docs/
+coverage/
+public/
+node_modules/
+dist/
+service-worker.js
+types/
+*.d.ts
