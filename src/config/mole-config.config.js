@@ -27,6 +27,8 @@ export function getRandomMoleIndex() {
 export function generateActiveMoles(activeIndex) {
   const total = SIZES_MOLETABLE * SIZES_MOLETABLE;
   const result = new Array(total).fill(false);
-  result[activeIndex] = true;
+  if (activeIndex >= 0 && activeIndex < total) {
+    result[activeIndex] = true;
+  }
   return result;
 }

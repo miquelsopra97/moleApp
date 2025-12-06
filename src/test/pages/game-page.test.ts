@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import type { TemplateResult } from 'lit';
-import '../pages/game/game-page.js';
-import { saveScore } from '../config/score-config.config.js';
+import '../../pages/game/game-page.js';
+import { saveScore } from '../../config/score-config.config.js';
 
 interface GamePage extends HTMLElement {
   publish(eventName: string, data?: unknown): void;

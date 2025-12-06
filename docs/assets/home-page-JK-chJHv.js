@@ -1,4 +1,4 @@
-import{i as g,n as m,a as f,x as n,t as _,r as d}from"./index-CNsa2DUR.js";import{P as v}from"./PageTransitionsMixin-C3JExxZE.js";import{P as y}from"./game-button-CXPnrbrj.js";const $=g`
+import{i as g,n as m,a as f,x as n,t as _,r as d}from"./index-CiA9MfzI.js";import{P as v}from"./PageTransitionsMixin-C3JExxZE.js";import{P as y}from"./game-button-C7aBPxxH.js";const $=g`
   :host {
     display: block;
     margin-bottom: 1rem;
@@ -96,6 +96,9 @@ import{i as g,n as m,a as f,x as n,t as _,r as d}from"./index-CNsa2DUR.js";impor
       </div>
     `}};u.styles=w;h([d()],u.prototype,"_value",2);h([d()],u.prototype,"_error",2);u=h([_("form-game")],u);var j=Object.defineProperty,E=Object.getOwnPropertyDescriptor,b=(t,e,a,o)=>{for(var r=o>1?void 0:o?E(e,a):e,l=t.length-1,s;l>=0;l--)(s=t[l])&&(r=(o?s(e,a,r):s(r))||r);return o&&r&&j(e,a,r),r};let c=class extends v(y(f)){constructor(){super(...arguments),this._playerName="",this._error=null}firstUpdated(t){var e;(e=super.firstUpdated)==null||e.call(this,t),this._layout=this.renderRoot.querySelector("page-layout")}_startGame(t){const e=t.detail.value;localStorage.setItem("playerName",e),this.publish("player-name",e),this.navigate("game",{playerName:e})}render(){return n`
       <page-layout>
-        <form-game @form-submit=${this._startGame} @go-score=${()=>this.navigate("score")}></form-game>
+        <form-game
+          @form-submit=${this._startGame}
+          @go-score=${()=>this.navigate("score")}
+        ></form-game>
       </page-layout>
     `}};b([d()],c.prototype,"_playerName",2);b([d()],c.prototype,"_error",2);c=b([_("home-page")],c);export{c as HomePage};

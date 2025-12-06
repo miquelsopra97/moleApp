@@ -19,10 +19,10 @@
     "coverage:open": "vitest --coverage && open coverage/lcov-report/index.html"
   },
   "lint-staged": {
-  "src/**/*.{ts,js}": [
-    "eslint --fix",
-    "prettier --write"
-  ]
+    "src/**/*.{ts,js}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   },
   "dependencies": {
     "@material/web": "^1.2.0",

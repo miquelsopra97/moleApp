@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import type { TemplateResult } from 'lit';
-import '../pages/home/home-page.js';
+import '../../pages/home/home-page.js';
 
 interface HomePageInstance extends HTMLElement {
   publish(eventName: string, data?: unknown): void;
