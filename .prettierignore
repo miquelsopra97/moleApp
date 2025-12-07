@@ -1,0 +1,8 @@
+node_modules
+dist
+coverage
+*.svg
+*.png
+*.jpg
+.vscode
+.husky

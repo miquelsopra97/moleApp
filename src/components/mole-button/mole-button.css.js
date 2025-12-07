@@ -12,18 +12,20 @@ export const styles = css`
     border-radius: 0.63rem;
 
     border: 3px solid #333;
-    background: #e6d5ad; 
+    background: #e6d5ad;
     color: #000;
 
     cursor: pointer;
-    transition: transform 0.1s, background 0.15s;
+    transition:
+      transform 0.1s,
+      background 0.15s;
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  button[data-active="true"] {
-    background: #ffe8a3; 
+  button[data-active='true'] {
+    background: #ffe8a3;
     transform: scale(1.05);
   }
 

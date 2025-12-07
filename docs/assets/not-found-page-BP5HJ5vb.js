@@ -1,4 +1,4 @@
-import{E as G,_ as s,a as b,n as h,i as m,t as f,T as H,r as L,x as p,b as u}from"./index-NOAMqjKs.js";import{P as U}from"./PageTransitionsMixin-C3JExxZE.js";/**
+import{E as G,_ as s,a as b,n as h,i as m,t as f,T as H,r as L,x as p,b as u}from"./index-BFfoDToU.js";import{P as U}from"./PageTransitionsMixin-C3JExxZE.js";/**
  * @license
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
@@ -147,7 +147,8 @@ import{E as G,_ as s,a as b,n as h,i as m,t as f,T as H,r as L,x as p,b as u}fro
             <li>
               <md-outlined-button aria-label="Back to home" href="#!/">
                 <md-icon filled slot="icon">arrow_back</md-icon>
-                <span class="md-outlined-button-text">Back to</span> home
+                <span class="md-outlined-button-text">Back to</span>
+                home
               </md-outlined-button>
             </li>
           </ul>

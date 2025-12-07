@@ -1,4 +1,4 @@
-import{i as b,n as v,a as d,x as p,t as f,D as M,r as c}from"./index-NOAMqjKs.js";import{P as w}from"./game-button-BSDhb6Po.js";import{P as L}from"./PageTransitionsMixin-C3JExxZE.js";import{s as $}from"./score-config.config-DB4tY8vk.js";const I=b`
+import{i as b,n as v,a as d,x as p,t as f,D as M,r as c}from"./index-BFfoDToU.js";import{P as w}from"./game-button-CR_mlCBl.js";import{P as L}from"./PageTransitionsMixin-C3JExxZE.js";import{s as $}from"./score-config.config-DB4tY8vk.js";const I=b`
   :host {
     display: block;
     width: fit-content;
@@ -26,18 +26,20 @@ import{i as b,n as v,a as d,x as p,t as f,D as M,r as c}from"./index-NOAMqjKs.js
     border-radius: 0.63rem;
 
     border: 3px solid #333;
-    background: #e6d5ad; 
+    background: #e6d5ad;
     color: #000;
 
     cursor: pointer;
-    transition: transform 0.1s, background 0.15s;
+    transition:
+      transform 0.1s,
+      background 0.15s;
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  button[data-active="true"] {
-    background: #ffe8a3; 
+  button[data-active='true'] {
+    background: #ffe8a3;
     transform: scale(1.05);
   }
 
@@ -53,7 +55,9 @@ import{i as b,n as v,a as d,x as p,t as f,D as M,r as c}from"./index-NOAMqjKs.js
   }
 `,x="/moleApp/assets/TopoMontySMP-5dMTKVNB.png";var O=Object.defineProperty,N=Object.getOwnPropertyDescriptor,P=(t,e,i,a)=>{for(var s=a>1?void 0:a?N(e,i):e,r=t.length-1,o;r>=0;r--)(o=t[r])&&(s=(a?o(e,i,s):o(s))||s);return a&&s&&O(e,i,s),s};let _=class extends d{constructor(){super(...arguments),this.active=!1,this.hitSound=new Audio("/moleApp/sounds/hitmole.mp3")}_onClick(){var t;this.active&&((t=navigator.vibrate)==null||t.call(navigator,80),this.hitSound.currentTime=0,this.hitSound.play()),this.dispatchEvent(new CustomEvent("mole-hit",{detail:{active:this.active},bubbles:!0,composed:!0}))}render(){return p`
       <button @click=${this._onClick}>
-        ${this.active?p`<img class="mole-img" src="${x}" alt="Mole" />`:""}
+        ${this.active?p`
+              <img class="mole-img" src="${x}" alt="Mole" />
+            `:""}
       </button>
     `}};_.styles=T;P([v({type:Boolean})],_.prototype,"active",2);_=P([f("mole-button")],_);const u={Low:{interval:1e3,points:10},Medium:{interval:750,points:20},High:{interval:500,points:30}},l=3;function y(t){return t&&u[t]?u[t]:u.Low}function S(){const t=l*l;return Math.floor(Math.random()*t)}function A(t){const e=l*l,i=new Array(e).fill(!1);return t>=0&&t<e&&(i[t]=!0),i}var C=Object.defineProperty,E=Object.getOwnPropertyDescriptor,g=(t,e,i,a)=>{for(var s=a>1?void 0:a?E(e,i):e,r=t.length-1,o;r>=0;r--)(o=t[r])&&(s=(a?o(e,i,s):o(s))||s);return a&&s&&C(e,i,s),s};let m=class extends d{constructor(){super(...arguments),this.size=l,this.activeMoles=[]}get _totalCells(){return this.size*this.size}_onMoleHit(t,e){var i;this.dispatchEvent(new CustomEvent("mole-hit",{detail:{index:t,active:(i=e.detail)==null?void 0:i.active},bubbles:!0,composed:!0}))}render(){return p`
       <div class="grid" style="grid-template-columns: repeat(${this.size}, 1fr);">
@@ -74,8 +78,6 @@ import{i as b,n as v,a as d,x as p,t as f,D as M,r as c}from"./index-NOAMqjKs.js
               width="800px"
               height="800px"
               viewBox="0 0 52 52"
-              data-name="Layer 1"
-              id="Layer_1"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path

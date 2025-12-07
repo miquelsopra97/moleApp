@@ -35,7 +35,7 @@ describe('home-page (unit)', () => {
 
   it('template contains go-score handler that navigates to score', () => {
     const tpl = el.render();
-    const index = tpl.strings.findIndex(staticPart => staticPart.includes('@go-score='));
+    const index = tpl.strings.findIndex((staticPart) => staticPart.includes('@go-score='));
     expect(index).toBeGreaterThanOrEqual(0);
     const handler = tpl.values[index] as () => void;
     handler();

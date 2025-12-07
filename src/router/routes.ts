@@ -17,7 +17,7 @@ export const routes: RouteDefinition[] = [
       await import('../pages/game/game-page.js');
     },
   },
-    {
+  {
     path: '/score',
     name: 'score',
     component: 'score-page',

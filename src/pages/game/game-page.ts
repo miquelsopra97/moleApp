@@ -6,35 +6,99 @@ import { PageTransitionsMixin } from '@open-cells/page-transitions';
 import '../../components/page-layout/page-layout.js';
 import '../../components/mole-table/mole-table.js';
 import '../../components/game-button/game-button.js';
+
 import {
   getMoleSettings,
   getRandomMoleIndex,
   generateActiveMoles,
   SIZES_MOLETABLE,
 } from '../../config/mole-config.config.js';
+
 import { saveScore } from '../../config/score-config.config.js';
 import { DifficultyLevel } from '../../models/enums/game-select.enum.js';
 
 // @ts-ignore
 @customElement('game-page')
 export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
-  @state() protected _playerName = '';
-  @state() protected _score = 0;
-  @state() private _isPlaying = false;
-  @state() private _activeMoles: boolean[] = new Array(SIZES_MOLETABLE * SIZES_MOLETABLE).fill(
-    false,
-  );
-  @state() private _intervalId: number | null = null;
-  @state() private level: DifficultyLevel = DifficultyLevel.LOW;
-  @state() private _timeLeft: number = 60;
+  /**
+   * Player name, coming from navigation params or localStorage.
+   *
+   * @type {string}
+   * @protected
+   */
+  @state()
+  protected _playerName = '';
 
+  /**
+   * Current score accumulated during the match.
+   *
+   * @type {number}
+   * @protected
+   */
+  @state()
+  protected _score = 0;
+
+  /**
+   * Indicates whether the game is currently active.
+   *
+   * @private
+   * @type {boolean}
+   */
+  @state()
+  private _isPlaying = false;
+
+  /**
+   * Boolean grid indicating which moles are active.
+   *
+   * @private
+   * @type {boolean[]}
+   */
+  @state()
+  private _activeMoles: boolean[] = new Array(SIZES_MOLETABLE * SIZES_MOLETABLE).fill(false);
+
+  /**
+   * Interval ID for the mole appearance loop.
+   *
+   * @private
+   * @type {number | null}
+   */
+  @state()
+  private _intervalId: number | null = null;
+
+  /**
+   * Difficulty level (Low, Medium, High).
+   *
+   * @private
+   * @type {DifficultyLevel}
+   */
+  @state()
+  private level: DifficultyLevel = DifficultyLevel.LOW;
+
+  /**
+   * Time remaining in the match, in seconds.
+   *
+   * @private
+   * @type {number}
+   */
+  @state()
+  private _timeLeft: number = 60;
+
+  /**
+   * Interval ID for the timer countdown.
+   *
+   * @private
+   * @type {number | null}
+   */
   private _timerId: number | null = null;
 
+  /** Loads player name, subscribes to events and difficulty changes. */
   firstUpdated(props: any) {
     super.firstUpdated?.(props);
+
     const playerName = this.params?.playerName as string | undefined;
     const savedName = localStorage.getItem('playerName');
 
+    // Restore player name
     if (playerName) {
       this._playerName = playerName;
     } else if (savedName) {
@@ -43,13 +107,17 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
       this._playerName = 'Player';
     }
 
+    // Listen for player name updates
     this.subscribe('player-name', (name: string) => {
       this._playerName = name;
       localStorage.setItem('playerName', name);
     });
 
+    // Listen for difficulty changes (from AppIndex)
     this.subscribe('game-level', (level: DifficultyLevel) => {
       this.level = level;
+
+      // Restart loop immediately if game is ongoing
       if (this._isPlaying) {
         this._stopLoop();
         this._startLoop();
@@ -57,12 +125,19 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
     });
   }
 
+  /** Clean up subscriptions when leaving the page. */
   disconnectedCallback(): void {
     this.unsubscribe('player-name');
     this.unsubscribe('game-level');
     super.disconnectedCallback();
   }
 
+  /**
+   * Handles a mole click. Only active moles increase the score.
+   *
+   * @private
+   * @param {CustomEvent} e - Event detail contains `{ active: boolean }`
+   */
   private _handleMoleHit(e: CustomEvent) {
     if (this._isPlaying && e.detail?.active) {
       const { points } = getMoleSettings(this.level);
@@ -70,6 +145,11 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
     }
   }
 
+  /**
+   * Stops and clears the countdown timer.
+   *
+   * @private
+   */
   private _clearTimer() {
     if (this._timerId) {
       clearInterval(this._timerId);
@@ -77,10 +157,21 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
     }
   }
 
+  /**
+   * Saves the player's high score to localStorage.
+   *
+   * @private
+   */
   private _saveHighScore() {
     saveScore(this._playerName, this._score);
   }
 
+  /**
+   * Toggles the game state between start and stop. Handles resetting, stopping loops, and saving
+   * score.
+   *
+   * @private
+   */
   private _controllerGame() {
     this._isPlaying = !this._isPlaying;
 
@@ -97,6 +188,11 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
     }
   }
 
+  /**
+   * Starts the mole appearance loop. Interval depends on selected difficulty.
+   *
+   * @private
+   */
   private _startLoop() {
     const settings = getMoleSettings(this.level);
     const interval = settings.interval;
@@ -116,6 +212,11 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
     }, interval);
   }
 
+  /**
+   * Stops the mole appearance loop and clears active moles.
+   *
+   * @private
+   */
   private _stopLoop() {
     if (this._intervalId) {
       clearInterval(this._intervalId);
@@ -123,20 +224,34 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
     }
     this._activeMoles = [];
   }
+
+  /**
+   * Starts the countdown timer. Ends the game at 0 seconds.
+   *
+   * @private
+   */
   private _startTimer() {
     this._clearTimer();
+
     this._timerId = window.setInterval(() => {
       this._timeLeft--;
+
       if (this._timeLeft <= 0) {
         this._isPlaying = false;
         this._stopLoop();
         this._saveHighScore();
         this._clearTimer();
       }
+
       this.requestUpdate();
     }, 1000);
   }
 
+  /**
+   * Navigates back to the home page and resets the game state.
+   *
+   * @private
+   */
   private _goBack() {
     this._isPlaying = false;
 
@@ -161,8 +276,6 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
               width="800px"
               height="800px"
               viewBox="0 0 52 52"
-              data-name="Layer 1"
-              id="Layer_1"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path

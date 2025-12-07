@@ -8,7 +8,7 @@ vi.mock('@open-cells/element-controller', () => ({
   ElementController: class {
     publish = publishMock;
     unsubscribe = unsubscribeMock;
-  }
+  },
 }));
 
 describe('page-layout', () => {
@@ -32,8 +32,7 @@ describe('page-layout', () => {
     await el.updateComplete;
   };
 
-  const getScroller = () =>
-    el.shadowRoot!.querySelector('.scroller') as HTMLElement;
+  const getScroller = () => el.shadowRoot!.querySelector('.scroller') as HTMLElement;
 
   it('renders required layout elements', async () => {
     await wait();

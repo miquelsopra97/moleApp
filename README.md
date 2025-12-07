@@ -4,11 +4,11 @@ Bienvenido a **MoleApp**, un proyecto basado en **Lit**, **Vite**, **Vitest**, *
 
 Este README te guiará paso a paso en:
 
-* ✔ Cómo arrancar el proyecto
-* ✔ Cómo ejecutar los tests unitarios y e2e
-* ✔ Cómo generar cobertura
-* ✔ Cómo ejecutar SonarCloud localmente
-* ✔ Qué debe hacer cualquier persona del equipo para que funcione
+- ✔ Cómo arrancar el proyecto
+- ✔ Cómo ejecutar los tests unitarios y e2e
+- ✔ Cómo generar cobertura
+- ✔ Cómo ejecutar SonarCloud localmente
+- ✔ Qué debe hacer cualquier persona del equipo para que funcione
 
 ---
 
@@ -16,8 +16,8 @@ Este README te guiará paso a paso en:
 
 Asegúrate de tener instalado:
 
-* **Node.js ≥ 18**
-* **npm ≥ 7**
+- **Node.js ≥ 18**
+- **npm ≥ 7**
 
 Comprueba con:
 
@@ -80,6 +80,7 @@ Verás la salida de los tests unitarios y los snapshots si los hubiera.
 ```bash
 npm run test:e2e
 ```
+
 ---
 
 # 📊 7. Coverage (cobertura)
@@ -120,7 +121,7 @@ Para que cualquier desarrollador pueda ejecutar SonarCloud **sin instalar Java**
 1. Entra en: [https://sonarcloud.io](https://sonarcloud.io)
 2. Arriba a la derecha → **My Account**
 3. Izquierda → **Security**
-4. Generar token: escribe un nombre → clic en *Generate*
+4. Generar token: escribe un nombre → clic en _Generate_
 5. Copia el token (solo aparece una vez)
 
 Tendrá forma:
@@ -198,8 +199,8 @@ Cuando el análisis termine, puedes ver el dashboard del proyecto en la URL del 
 
 # 🎯 11. Notas adicionales
 
-* No es necesario instalar Java ni SonarQube localmente.
-* Cada persona debe generar su propio token de SonarCloud.
-* La integración CI/CD se puede añadir en GitHub Actions si se desea.
+- No es necesario instalar Java ni SonarQube localmente.
+- Cada persona debe generar su propio token de SonarCloud.
+- La integración CI/CD se puede añadir en GitHub Actions si se desea.
 
 ---

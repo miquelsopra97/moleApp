@@ -1,4 +1,4 @@
-import{i as g,n as m,a as f,x as n,t as _,r as d}from"./index-NOAMqjKs.js";import{P as v}from"./PageTransitionsMixin-C3JExxZE.js";import{P as y}from"./game-button-BSDhb6Po.js";const $=g`
+import{i as g,n as m,a as f,x as n,t as _,r as d}from"./index-BFfoDToU.js";import{P as v}from"./PageTransitionsMixin-C3JExxZE.js";import{P as y}from"./game-button-CR_mlCBl.js";const $=g`
   :host {
     display: block;
     margin-bottom: 1rem;
@@ -26,7 +26,10 @@ import{i as g,n as m,a as f,x as n,t as _,r as d}from"./index-NOAMqjKs.js";impor
     font-size: 1rem;
     font-family: inherit;
     outline: none;
-    transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+    transition:
+      border-color 0.15s,
+      box-shadow 0.15s,
+      background 0.15s;
   }
 
   .field__control::placeholder {
@@ -52,7 +55,9 @@ import{i as g,n as m,a as f,x as n,t as _,r as d}from"./index-NOAMqjKs.js";impor
   }
 `;var x=Object.defineProperty,P=Object.getOwnPropertyDescriptor,p=(t,e,a,o)=>{for(var r=o>1?void 0:o?P(e,a):e,l=t.length-1,s;l>=0;l--)(s=t[l])&&(r=(o?s(e,a,r):s(r))||r);return o&&r&&x(e,a,r),r};let i=class extends f{constructor(){super(...arguments),this.label="",this.placeholder="",this.value="",this.error=null}_sanitize(t){return t.replaceAll(/[^a-zA-Z0-9 ]/g,"")}_onInput(t){const e=t.target,a=this._sanitize(e.value);this.value=a,this.dispatchEvent(new CustomEvent("game-input",{detail:{value:this.value},bubbles:!0,composed:!0}))}render(){return n`
       <label class="field">
-        ${this.label?n`<span class="field__label">${this.label}</span>`:null}
+        ${this.label?n`
+              <span class="field__label">${this.label}</span>
+            `:null}
 
         <input
           class="field__control"
@@ -63,7 +68,9 @@ import{i as g,n as m,a as f,x as n,t as _,r as d}from"./index-NOAMqjKs.js";impor
           required
         />
 
-        ${this.error?n`<span class="field__error">${this.error}</span>`:null}
+        ${this.error?n`
+              <span class="field__error">${this.error}</span>
+            `:null}
       </label>
     `}};i.styles=$;p([m({type:String})],i.prototype,"label",2);p([m({type:String})],i.prototype,"placeholder",2);p([m({type:String})],i.prototype,"value",2);p([m({type:String})],i.prototype,"error",2);i=p([_("game-input")],i);const w=g`
   :host {
@@ -91,8 +98,9 @@ import{i as g,n as m,a as f,x as n,t as _,r as d}from"./index-NOAMqjKs.js";impor
           @game-input=${this._onInput}
         ></game-input>
 
-        <game-button text="Empezar juego" @game-click=${this._onSubmit}></game-button>
-        <game-button text="Ver puntuaciones" @game-click=${this._goToScore}></game-button>
+        <game-button text="Start game" @game-click=${this._onSubmit}></game-button>
+
+        <game-button text="View scores" @game-click=${this._goToScore}></game-button>
       </div>
     `}};u.styles=w;h([d()],u.prototype,"_value",2);h([d()],u.prototype,"_error",2);u=h([_("form-game")],u);var j=Object.defineProperty,E=Object.getOwnPropertyDescriptor,b=(t,e,a,o)=>{for(var r=o>1?void 0:o?E(e,a):e,l=t.length-1,s;l>=0;l--)(s=t[l])&&(r=(o?s(e,a,r):s(r))||r);return o&&r&&j(e,a,r),r};let c=class extends v(y(f)){constructor(){super(...arguments),this._playerName="",this._error=null}firstUpdated(t){var e;(e=super.firstUpdated)==null||e.call(this,t),this._layout=this.renderRoot.querySelector("page-layout")}_startGame(t){const e=t.detail.value;localStorage.setItem("playerName",e),this.publish("player-name",e),this.navigate("game",{playerName:e})}render(){return n`
       <page-layout>

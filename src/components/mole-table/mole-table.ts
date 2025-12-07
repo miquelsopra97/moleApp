@@ -1,7 +1,6 @@
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { styles } from './mole-table.css.js';
-// ajusta la ruta según tu árbol
 import '../mole-button/mole-button.js';
 import { SIZES_MOLETABLE } from '../../config/mole-config.config.js';
 
@@ -9,14 +8,49 @@ import { SIZES_MOLETABLE } from '../../config/mole-config.config.js';
 export class MoleTable extends LitElement {
   static readonly styles = styles;
 
-  @property({ type: Number }) size = SIZES_MOLETABLE;
+  /**
+   * Number of columns and rows of the mole grid. The grid is always square (size × size). Defaults
+   * to the value defined in `SIZES_MOLETABLE`.
+   *
+   * @type {number}
+   */
+  @property({ type: Number })
+  size = SIZES_MOLETABLE;
 
-  @property({ type: Array }) activeMoles: boolean[] = [];
+  /**
+   * Boolean array indicating which mole positions are active. The length should match `size *
+   * size`.
+   *
+   * Example: [false, true, false, ...]
+   *
+   * @type {boolean[]}
+   */
+  @property({ type: Array })
+  activeMoles: boolean[] = [];
 
+  /**
+   * Total number of cells in the grid (computed).
+   *
+   * @private
+   * @returns {number}
+   */
   private get _totalCells(): number {
     return this.size * this.size;
   }
 
+  /**
+   * Handles `mole-hit` events emitted by individual <mole-button> children. Re-emits the event with
+   * additional context:
+   *
+   * - The index of the mole clicked.
+   * - Whether it was active when hit.
+   *
+   * @private
+   * @param {number} index - Position of the mole in the grid.
+   * @param {CustomEvent} e - Original event from <mole-button>.
+   * @event mole-hit
+   * @detail {index: number, active: boolean}
+   */
   private _onMoleHit(index: number, e: CustomEvent) {
     this.dispatchEvent(
       new CustomEvent('mole-hit', {
@@ -33,8 +67,9 @@ export class MoleTable extends LitElement {
   render() {
     return html`
       <div class="grid" style="grid-template-columns: repeat(${this.size}, 1fr);">
-        ${[...new Array(this._totalCells).keys()].map(index => {
+        ${[...new Array(this._totalCells).keys()].map((index) => {
           const isActive = this.activeMoles?.[index] ?? false;
+
           return html`
             <mole-button
               .active=${isActive}

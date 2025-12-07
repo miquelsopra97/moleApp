@@ -1,39 +1,32 @@
 const CACHE_NAME = 'molegame-cache-v1';
 
-const ASSETS = [
-  './',
-  './index.html',
-  './manifest.json',
-  './icon-192.png',
-];
+const ASSETS = ['./', './index.html', './manifest.json', './icon-192.png'];
 
-self.addEventListener('install', event => {
+self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(ASSETS))
-      .catch(err => {
+    caches
+      .open(CACHE_NAME)
+      .then((cache) => cache.addAll(ASSETS))
+      .catch((err) => {
         console.warn('[SW] Error en cache.addAll:', err);
-      })
+      }),
   );
 });
 
-self.addEventListener('activate', event => {
+self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(
-        keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))
-      )
-    )
+    caches
+      .keys()
+      .then((keys) =>
+        Promise.all(keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))),
+      ),
   );
 });
 
-self.addEventListener('fetch', event => {
+self.addEventListener('fetch', (event) => {
   event.respondWith(
-    caches.match(event.request).then(cacheResp => {
-      return (
-        cacheResp ||
-        fetch(event.request).catch(() => caches.match('/index.html'))
-      );
-    })
+    caches.match(event.request).then((cacheResp) => {
+      return cacheResp || fetch(event.request).catch(() => caches.match('/index.html'));
+    }),
   );
 });

@@ -7,14 +7,31 @@ import '../game-button/game-button.js';
 
 @customElement('form-game')
 export class FormGame extends LitElement {
-  static styles = styles;
+  static readonly styles = styles;
 
+  /**
+   * Current value of the input field. Updated on every `game-input` event emitted by <game-input>.
+   *
+   * @type {string}
+   * @protected
+   */
   @state()
   protected _value: string = '';
 
+  /**
+   * Error message shown below the input. Null when no error should be displayed.
+   *
+   * @type {string | null}
+   * @protected
+   */
   @state()
   protected _error: string | null = null;
 
+  /**
+   * Handles input updates from <game-input>. Clears the error when the value becomes valid.
+   *
+   * @param {CustomEvent} e - Contains the updated field value.
+   */
   private _onInput(e: CustomEvent) {
     this._value = e.detail.value;
     if (this._error && this._value.trim().length > 0) {
@@ -22,6 +39,13 @@ export class FormGame extends LitElement {
     }
   }
 
+  /**
+   * Validates the input and emits a `form-submit` event. If the name is empty, sets an error
+   * message instead.
+   *
+   * @event form-submit
+   * @detail {value: string} Player name submitted by the form.
+   */
   private _onSubmit() {
     const name = this._value.trim();
 
@@ -39,6 +63,11 @@ export class FormGame extends LitElement {
     );
   }
 
+  /**
+   * Emits a `go-score` event to navigate to the score screen.
+   *
+   * @event go-score
+   */
   private _goToScore() {
     this.dispatchEvent(
       new CustomEvent('go-score', {
@@ -59,8 +88,9 @@ export class FormGame extends LitElement {
           @game-input=${this._onInput}
         ></game-input>
 
-        <game-button text="Empezar juego" @game-click=${this._onSubmit}></game-button>
-        <game-button text="Ver puntuaciones" @game-click=${this._goToScore}></game-button>
+        <game-button text="Start game" @game-click=${this._onSubmit}></game-button>
+
+        <game-button text="View scores" @game-click=${this._goToScore}></game-button>
       </div>
     `;
   }

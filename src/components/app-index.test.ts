@@ -80,7 +80,7 @@ describe('app-index', () => {
   it('updates playerName when receiving "player-name" event', async () => {
     await create();
 
-    const subCall = subscribeMock.mock.calls.find(c => c[0] === 'player-name');
+    const subCall = subscribeMock.mock.calls.find((c) => c[0] === 'player-name');
     expect(subCall).toBeDefined();
 
     const callback = subCall![1];

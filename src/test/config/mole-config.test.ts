@@ -47,6 +47,6 @@ describe('mole-config', () => {
     const total = SIZES_MOLETABLE * SIZES_MOLETABLE;
 
     expect(arr.length).toBe(total);
-    expect(arr.every(v => v === false)).toBe(true);
+    expect(arr.every((v) => v === false)).toBe(true);
   });
 });

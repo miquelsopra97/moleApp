@@ -28,7 +28,10 @@ export const styles = css`
     font-size: 1rem;
     font-family: inherit;
     outline: none;
-    transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+    transition:
+      border-color 0.15s,
+      box-shadow 0.15s,
+      background 0.15s;
   }
 
   .field__control::placeholder {

@@ -7,11 +7,30 @@ import { MoleButtonVariant } from '../../models/enums/game-button.enum.js';
 export class GameButton extends LitElement {
   static readonly styles = styles;
 
-  @property({ type: String }) text = '';
+  /**
+   * Text displayed inside the button.
+   *
+   * @type {string}
+   */
+  @property({ type: String })
+  text = '';
 
+  /**
+   * Visual style of the button.\
+   * Accepts values from the `MoleButtonVariant` enum (e.g., DEFAULT, BACK).\
+   * When set to BACK, an icon slot will be rendered before the label.
+   *
+   * @type {MoleButtonVariant}
+   */
   @property({ type: String })
   variant: MoleButtonVariant = MoleButtonVariant.DEFAULT;
 
+  /**
+   * Event emitted when the button is clicked. Event name: `game-click`
+   *
+   * @event game-click
+   * @detail {text: string} Sends the current button text.
+   */
   private _onClick() {
     this.dispatchEvent(
       new CustomEvent('game-click', {
@@ -23,7 +42,7 @@ export class GameButton extends LitElement {
   }
 
   render() {
-    const isBack = this.variant === MoleButtonVariant.BACK
+    const isBack = this.variant === MoleButtonVariant.BACK;
     return html`
       <button class=${this.variant} @click=${this._onClick}>
         ${isBack
@@ -33,7 +52,8 @@ export class GameButton extends LitElement {
               </span>
             `
           : null}
-        <span class="label">${this.text}</span>      </button>
+        <span class="label">${this.text}</span>
+      </button>
     `;
   }
 }

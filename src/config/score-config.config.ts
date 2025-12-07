@@ -11,7 +11,7 @@ export function saveScore(name: string, score: number): void {
   const stored: IScoreEntry[] = JSON.parse(localStorage.getItem('scores') || '[]');
 
   // Check if the player already exists in the stored list
-  const existing = stored.find(entry => entry.name === name);
+  const existing = stored.find((entry) => entry.name === name);
 
   if (existing) {
     // Update only if the new score is higher
@@ -28,10 +28,6 @@ export function saveScore(name: string, score: number): void {
 
   localStorage.setItem('scores', JSON.stringify(stored));
 }
-
-// ------------------------------------------
-// getScores
-// ------------------------------------------
 
 /**
  * Retrieves the list of stored scores from localStorage.
