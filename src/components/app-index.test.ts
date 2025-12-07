@@ -60,7 +60,6 @@ describe('app-index', () => {
   it('subscribes to scroll and player-name on connectedCallback', async () => {
     globalThis.location.hash = '#!/game';
 
-    // simulate no name stored
     localStorage.clear();
 
     await create();

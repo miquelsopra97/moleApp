@@ -81,7 +81,6 @@ describe('game-page (unit)', () => {
     expect(el._activeMoles).toEqual([]);
   });
 
-  //
   it('_saveHighScore calls saveScore correctly', () => {
     el._playerName = 'Miquel';
     el._score = 42;
@@ -106,5 +105,97 @@ describe('game-page (unit)', () => {
     expect(stopLoopSpy).toHaveBeenCalled();
     expect(saveScoreSpy).toHaveBeenCalled();
     expect(clearTimerSpy).toHaveBeenCalled();
+  });
+
+  it('restores playerName from params', async () => {
+    document.body.innerHTML = '<game-page></game-page>';
+    const el = document.querySelector('game-page') as GamePage;
+
+    (el as any).params = { playerName: 'Miquel' };
+
+    await (el as any).performUpdate?.();
+
+    expect(el._playerName).toBe('Miquel');
+  });
+
+  it('restores playerName from localStorage', async () => {
+    localStorage.setItem('playerName', 'StoredName');
+
+    document.body.innerHTML = '<game-page></game-page>';
+    const el = document.querySelector('game-page') as GamePage;
+
+    await (el as any).performUpdate?.();
+
+    expect(el._playerName).toBe('StoredName');
+  });
+
+  it('defaults playerName to "Player"', async () => {
+    document.body.innerHTML = '<game-page></game-page>';
+    const el = document.querySelector('game-page') as GamePage;
+
+    await (el as any).performUpdate?.();
+
+    expect(el._playerName).toBe('Player');
+  });
+
+  it('updates player name when receiving "player-name" event', async () => {
+    document.body.innerHTML = '<game-page></game-page>';
+    const el = document.querySelector('game-page') as any;
+
+    await el.performUpdate?.();
+
+    el.__testCallbacks = {};
+    el.subscribe = (ev: string, cb: Function) => {
+      el.__testCallbacks[ev] = cb;
+    };
+    el.publish = (ev: string, data: any) => {
+      el.__testCallbacks[ev]?.(data);
+    };
+
+    el.firstUpdated();
+
+    el.publish('player-name', 'NewName');
+
+    expect(el._playerName).toBe('NewName');
+    expect(localStorage.getItem('playerName')).toBe('NewName');
+  });
+
+  it('restarts loop when game-level changes while playing', async () => {
+    document.body.innerHTML = '<game-page></game-page>';
+    const el = document.querySelector('game-page') as any;
+
+    await el.performUpdate?.();
+
+    el.__testCallbacks = {};
+    el.subscribe = (ev: string, cb: Function) => {
+      el.__testCallbacks[ev] = cb;
+    };
+    el.publish = (ev: string, data: any) => {
+      el.__testCallbacks[ev]?.(data);
+    };
+
+    el.firstUpdated();
+
+    el._isPlaying = true;
+
+    const stopSpy = vi.spyOn(el, '_stopLoop');
+    const startSpy = vi.spyOn(el, '_startLoop');
+
+    el.publish('game-level', 'medium');
+
+    expect(stopSpy).toHaveBeenCalled();
+    expect(startSpy).toHaveBeenCalled();
+  });
+
+  it('unsubscribe is called on disconnectedCallback', async () => {
+    document.body.innerHTML = '<game-page></game-page>';
+    const el = document.querySelector('game-page') as GamePage;
+
+    const unsubSpy = vi.spyOn(el as any, 'unsubscribe');
+
+    el.remove();
+
+    expect(unsubSpy).toHaveBeenCalledWith('player-name');
+    expect(unsubSpy).toHaveBeenCalledWith('game-level');
   });
 });
