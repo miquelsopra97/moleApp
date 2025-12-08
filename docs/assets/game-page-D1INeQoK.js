@@ -1,4 +1,4 @@
-import{i as b,n as u,a as d,x as p,t as f,D as M,r as h}from"./index-BiXHD5Nd.js";import{P as w}from"./game-button-BZub3XUQ.js";import{P as L}from"./PageTransitionsMixin-C3JExxZE.js";import{s as $}from"./score-config.config-DB4tY8vk.js";const I=b`
+import{i as b,n as u,a as d,x as p,t as f,D as M,r as h}from"./index-DKk74GeC.js";import{P as w}from"./game-button-fx7PSbEU.js";import{P as L}from"./PageTransitionsMixin-C3JExxZE.js";import{s as $}from"./score-config.config-DB4tY8vk.js";const I=b`
   :host {
     display: block;
     width: fit-content;
@@ -23,7 +23,9 @@ import{i as b,n as u,a as d,x as p,t as f,D as M,r as h}from"./index-BiXHD5Nd.js
     background: #e6d5ad;
     color: #000;
     cursor: pointer;
-    transition:transform 0.1s, background 0.15s;
+    transition:
+      transform 0.1s,
+      background 0.15s;
     display: flex;
     align-items: center;
     justify-content: center;

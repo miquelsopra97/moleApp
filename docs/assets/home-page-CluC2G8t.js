@@ -1,4 +1,4 @@
-import{i as b,n as c,a as f,x as n,t as _,r as h}from"./index-BiXHD5Nd.js";import{P as v}from"./PageTransitionsMixin-C3JExxZE.js";import{P as y}from"./game-button-BZub3XUQ.js";const $=b`
+import{i as b,n as c,a as f,x as n,t as _,r as h}from"./index-DKk74GeC.js";import{P as v}from"./PageTransitionsMixin-C3JExxZE.js";import{P as y}from"./game-button-fx7PSbEU.js";const $=b`
   :host {
     display: block;
     margin-bottom: 1rem;
@@ -41,7 +41,7 @@ import{i as b,n as c,a as f,x as n,t as _,r as h}from"./index-BiXHD5Nd.js";impor
     box-shadow: 0 0 0 2px rgba(122, 95, 62, 0.25);
     background: #fff8ee;
   }
-  
+
   .field__error {
     font-size: 0.8rem;
     color: #b44a3c;

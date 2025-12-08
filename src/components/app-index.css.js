@@ -26,9 +26,9 @@ export const styles = css`
   }
 
   .mole-logo {
-    height: 8.44rem;
-    width: 12.5rem;
-    padding-top: 2.9rem;
+    height: 7.44rem;
+    width: 10.5rem;
+    padding-top: 3.9rem;
   }
 
   .header--game .header-content {
