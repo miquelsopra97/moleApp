@@ -12,11 +12,8 @@ export const styles = css`
     background: #7a5f3e;
     color: #fff;
     border: none;
-    border-radius: 0.5rem; /* 8px */
-
+    border-radius: 0.5rem;
     font-size: 1rem;
-    font-weight: 600;
-
     cursor: pointer;
     transition:
       background 0.2s,

@@ -8,6 +8,7 @@ import '@open-cells/page-transitions/page-transition-head-styles.js';
 import './game-select/game-select.js';
 import { globalFontCSS } from '../styles/global-styles.css.js';
 import { DifficultyLevel } from '../models/enums/game-select.enum.js';
+import moleLogo from '../../public/images/logomole.png';
 
 document.adoptedStyleSheets = [...document.adoptedStyleSheets, globalFontCSS];
 
@@ -176,7 +177,9 @@ export class AppIndex extends LitElement {
   private renderHeader() {
     if (!this.isGame) {
       return html`
-        <header class="header header--home"></header>
+        <header class="header header--home">
+          <img class="mole-logo" src="${moleLogo}" alt="Mole Game Logo" />
+        </header>
       `;
     }
 

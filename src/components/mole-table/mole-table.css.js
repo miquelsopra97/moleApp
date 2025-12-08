@@ -11,9 +11,4 @@ export const styles = css`
     display: grid;
     gap: 0.5rem;
   }
-
-  tic-button {
-    width: 80px;
-    height: 80px;
-  }
 `;

@@ -21,8 +21,8 @@ export const styles = css`
 
   .field__control {
     padding: 0.6rem 0.8rem;
-    border-radius: 8px;
-    border: 2px solid #b79a7a;
+    border-radius: 0.5rem;
+    border: 0.125rem solid #b79a7a;
     background: #fffaf4;
     color: #3a2a18;
     font-size: 1rem;
@@ -42,13 +42,6 @@ export const styles = css`
     border-color: #7a5f3e;
     box-shadow: 0 0 0 2px rgba(122, 95, 62, 0.25);
     background: #fff8ee;
-  }
-
-  .field__control:disabled {
-    background: #f0e6da;
-    border-color: #c9b9a4;
-    color: #888;
-    cursor: not-allowed;
   }
 
   .field__error {

@@ -10,11 +10,9 @@ export const styles = css`
     height: 5.6rem;
     font-size: 2.5rem;
     border-radius: 0.63rem;
-
     border: 3px solid #333;
     background: #e6d5ad;
     color: #000;
-
     cursor: pointer;
     transition:
       transform 0.1s,

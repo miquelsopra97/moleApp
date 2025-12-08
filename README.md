@@ -1,25 +1,24 @@
-# 🎮 MoleApp — Guía Completa de Uso y Desarrollo
+# 🎮 MoleApp — Complete Usage & Development Guide
 
-Bienvenido a **MoleApp**, un proyecto basado en **Lit**, **Vite**, **Vitest**, **Playwright** y **SonarCloud**.
+Welcome to **MoleApp**, a project built with **Lit**, **Vite**, **Vitest** and **SonarCloud**.
 
-Este README te guiará paso a paso en:
+This README will guide you through:
 
-- ✔ Cómo arrancar el proyecto
-- ✔ Cómo ejecutar los tests unitarios y e2e
-- ✔ Cómo generar cobertura
-- ✔ Cómo ejecutar SonarCloud localmente
-- ✔ Qué debe hacer cualquier persona del equipo para que funcione
+* ✔ How to start the project
+* ✔ How to generate coverage reports
+* ✔ How to run SonarCloud analysis locally
+* ✔ What any team member needs to do for everything to work
 
 ---
 
-# 🚀 1. Requisitos previos
+# 🚀 1. Prerequisites
 
-Asegúrate de tener instalado:
+Make sure you have:
 
-- **Node.js ≥ 18**
-- **npm ≥ 7**
+* **Node.js ≥ 18**
+* **npm ≥ 7**
 
-Comprueba con:
+Check with:
 
 ```bash
 node -v
@@ -28,34 +27,34 @@ npm -v
 
 ---
 
-# 📦 2. Instalación del proyecto
+# 📦 2. Project Installation
 
 ```bash
-git clone <URL-del-repo>
+git clone <repo-URL>
 cd moleapp
 npm install
 ```
 
 ---
 
-# ▶️ 3. Ejecutar la aplicación en modo desarrollo
+# ▶️ 3. Run the application in development mode
 
 ```bash
 npm run dev
 ```
 
-Abre en el navegador:
-👉 **[http://localhost:5173](http://localhost:5173)** (o el puerto mostrado en consola)
+Open in your browser:
+👉 **[http://localhost:5173](http://localhost:5173)** (or the port shown in the console)
 
 ---
 
-# 🏗️ 4. Build de producción
+# 🏗️ 4. Production build
 
 ```bash
 npm run build
 ```
 
-Previsualizar la build:
+Preview the production build:
 
 ```bash
 npm run preview
@@ -63,68 +62,63 @@ npm run preview
 
 ---
 
-# 🧪 5. Tests unitarios (Vitest)
+# 🧪 5. Unit tests (Vitest)
 
-Para ejecutar los tests sin watch:
+To run tests without watch mode:
 
 ```bash
 npm run test:unit
 ```
 
-Verás la salida de los tests unitarios y los snapshots si los hubiera.
+You'll see the unit test output and snapshots if any exist.
 
 ---
 
-# 🤖 6. Tests E2E (Playwright)
-
-```bash
-npm run test:e2e
-```
-
 ---
 
-# 📊 7. Coverage (cobertura)
+# 📊 8. Coverage report
 
-Vitest genera cobertura con:
+Vitest generates coverage with:
 
 ```bash
 vitest --coverage
 ```
 
-Esto generará la carpeta:
+This will generate the folder:
 
 ```
 coverage/
   └── lcov.info
 ```
 
-Ese archivo es necesario para SonarCloud.
+That file is required for SonarCloud.
 
 ---
 
-# ☁️ 8. Integración con SonarCloud
+# ☁️ 9. SonarCloud Integration
 
-## 📝 8.1. Archivo `sonar-project.properties`
+## 📝 9.1. `sonar-project.properties`
 
-El proyecto incluye un `sonar-project.properties` ya configurado para SonarCloud.
+The project includes a preconfigured `sonar-project.properties` file.
 
-Si necesitas actualizarlo, está en la raíz del repo.
+If you need to update it, it's located in the root of the repo.
 
 ---
 
-# 🔐 9. Cómo ejecutar SonarCloud (para cualquier persona del equipo)
+# 🔐 10. How to run SonarCloud analysis (for any team member)
 
-Para que cualquier desarrollador pueda ejecutar SonarCloud **sin instalar Java** y **sin instalar SonarQube local**, solo hace falta un token personal.
+Anyone on the team can run SonarCloud **without installing Java** or a local SonarQube server.
+All you need is a personal token.
 
-## 9.1. Crear tu token personal en SonarCloud
+## 10.1. Create your personal SonarCloud token
 
-1. Entra en: [https://sonarcloud.io](https://sonarcloud.io)
-2. Arriba a la derecha → **My Account**
-3. Izquierda → **Security**
-4. Generar token: escribe un nombre → clic en _Generate_
-5. Copia el token (solo aparece una vez)
+1. Go to: [https://sonarcloud.io](https://sonarcloud.io)
+2. Top right → **My Account**
+3. Left menu → **Security**
+4. Generate a token: choose a name → click *Generate*
+5. Copy the token (it appears only once)
 
-Tendrá forma:
+It will look like:
 
 ```
 sqa_xxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -132,13 +126,13 @@ sqa_xxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 ---
 
-## 9.2. Exportar el token (temporal)
+## 10.2. Export the token (temporary)
 
 ```bash
-export SONAR_TOKEN="TU_TOKEN_AQUI"
+export SONAR_TOKEN="YOUR_TOKEN_HERE"
 ```
 
-Comprueba:
+Check it:
 
 ```bash
 echo $SONAR_TOKEN
@@ -146,21 +140,21 @@ echo $SONAR_TOKEN
 
 ---
 
-## 9.3. Exportar token (permanente)
+## 10.3. Export token permanently
 
-Editar tu `~/.zshrc`:
+Edit your `~/.zshrc`:
 
 ```bash
 open ~/.zshrc
 ```
 
-Añadir al final:
+Add at the end:
 
 ```bash
-export SONAR_TOKEN="TU_TOKEN_AQUI"
+export SONAR_TOKEN="YOUR_TOKEN_HERE"
 ```
 
-Recargar:
+Reload:
 
 ```bash
 source ~/.zshrc
@@ -168,39 +162,37 @@ source ~/.zshrc
 
 ---
 
-## 9.4. Ejecutar análisis SonarCloud
+## 10.4. Run SonarCloud analysis
 
 ```bash
 npm run sonar
 ```
 
-Este comando:
+This command:
 
-1. Ejecuta Vitest con coverage
-2. Lanza el SonarScanner vía `npx`
-3. Sube los resultados a SonarCloud
+1. Runs Vitest with coverage
+2. Executes the SonarScanner via `npx`
+3. Uploads results to SonarCloud
 
-Cuando el análisis termine, puedes ver el dashboard del proyecto en la URL del proyecto en SonarCloud.
-
----
-
-# 🧩 10. Scripts útiles
-
-| Script              | Acción                                         |
-| ------------------- | ---------------------------------------------- |
-| `npm run dev`       | Arranca Vite en modo desarrollo                |
-| `npm run build`     | Genera build de producción                     |
-| `npm run preview`   | Previsualiza la build                          |
-| `npm run test:unit` | Ejecuta tests unitarios                        |
-| `npm run test:e2e`  | Ejecuta Playwright                             |
-| `npm run sonar`     | Ejecuta tests + coverage + análisis SonarCloud |
+Once the analysis is finished, you can view the project dashboard on your SonarCloud project page.
 
 ---
 
-# 🎯 11. Notas adicionales
+# 🧩 11. Useful scripts
 
-- No es necesario instalar Java ni SonarQube localmente.
-- Cada persona debe generar su propio token de SonarCloud.
-- La integración CI/CD se puede añadir en GitHub Actions si se desea.
+| Script              | Action                                      |
+| ------------------- | ------------------------------------------- |
+| `npm run dev`       | Starts Vite in development mode             |
+| `npm run build`     | Creates a production build                  |
+| `npm run test:unit` | Runs unit tests                             |
+| `npm run sonar`     | Runs tests + coverage + SonarCloud analysis |
+
+---
+
+# 🎯 12. Additional notes
+
+* No need to install Java or a local SonarQube instance.
+* Each developer must generate their own SonarCloud token.
+* CI/CD integration can be added via GitHub Actions if needed.
 
 ---

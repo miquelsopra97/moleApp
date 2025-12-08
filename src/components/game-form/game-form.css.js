@@ -13,7 +13,7 @@ export const styles = css`
     display: flex;
     flex-direction: column;
     gap: 1.2rem;
-    width: 280px;
+    width: 17.5rem;
     margin: auto;
   }
 `;

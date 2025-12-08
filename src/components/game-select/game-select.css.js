@@ -10,10 +10,10 @@ export const styles = css`
     pointer-events: auto;
     background: transparent;
     border: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+    border-bottom: 0.0625rem solid rgba(255, 255, 255, 0.6);
     color: white;
     font-size: 0.9rem;
-    padding: 2px 4px;
+    padding: 0.125rem 0.25rem;
     outline: none;
     cursor: pointer;
   }

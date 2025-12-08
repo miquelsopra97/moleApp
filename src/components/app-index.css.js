@@ -13,10 +13,22 @@ export const styles = css`
   }
 
   .header {
-    height: 56px;
+    height: 3.5rem;
     background-color: var(--header-bg);
     color: var(--header-text);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.15);
+  }
+
+  .header--home {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .mole-logo {
+    height: 8.44rem;
+    width: 12.5rem;
+    padding-top: 2.9rem;
   }
 
   .header--game .header-content {
@@ -37,8 +49,8 @@ export const styles = css`
   }
 
   .avatar {
-    width: 32px;
-    height: 32px;
+    width: 2rem;
+    height: 2rem;
     border-radius: 50%;
     background: #f0e0c5;
     color: #5a4025;
@@ -71,7 +83,7 @@ export const styles = css`
   .level-select {
     background: transparent;
     border: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+    border-bottom: 0.0625rem solid rgba(255, 255, 255, 0.6);
     color: var(--header-text);
     font: inherit;
     padding: 0 0 2px 0;
@@ -85,6 +97,6 @@ export const styles = css`
   }
 
   .header.scrolled {
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 0.1875rem 0.375rem rgba(0, 0, 0, 0.25);
   }
 `;
