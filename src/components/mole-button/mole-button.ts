@@ -1,7 +1,7 @@
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { styles } from './mole-button.css.js';
-import moleImg from '../../../public/images/TopoMontySMP.png';
+import moleImg from '../../../public/images/mole.png';
 
 @customElement('mole-button')
 export class MoleButton extends LitElement {
