@@ -1,4 +1,4 @@
-export enum MoleButtonVariant {
+export enum GameButtonVariant {
   DEFAULT = 'default',
   BACK = 'back',
 }

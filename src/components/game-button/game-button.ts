@@ -1,7 +1,7 @@
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { styles } from './game-button.css.js';
-import { MoleButtonVariant } from '../../models/enums/game-button.enum.js';
+import { GameButtonVariant } from '../../models/enums/game-button.enum.js';
 
 @customElement('game-button')
 export class GameButton extends LitElement {
@@ -16,14 +16,12 @@ export class GameButton extends LitElement {
   text = '';
 
   /**
-   * Visual style of the button.\
-   * Accepts values from the `MoleButtonVariant` enum (e.g., DEFAULT, BACK).\
    * When set to BACK, an icon slot will be rendered before the label.
    *
-   * @type {MoleButtonVariant}
+   * @type {GameButtonVariant}
    */
   @property({ type: String })
-  variant: MoleButtonVariant = MoleButtonVariant.DEFAULT;
+  variant: GameButtonVariant = GameButtonVariant.DEFAULT;
 
   /**
    * Event emitted when the button is clicked. Event name: `game-click`
@@ -42,7 +40,7 @@ export class GameButton extends LitElement {
   }
 
   render() {
-    const isBack = this.variant === MoleButtonVariant.BACK;
+    const isBack = this.variant === GameButtonVariant.BACK;
     return html`
       <button class=${this.variant} @click=${this._onClick}>
         ${isBack

@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { MoleButtonVariant } from '../../models/enums/game-button.enum.js';
+import { GameButtonVariant } from '../../models/enums/game-button.enum.js';
 import './game-button.js';
 
 describe('game-button', () => {
@@ -7,7 +7,7 @@ describe('game-button', () => {
     updateComplete: Promise<void>;
     text: string;
     disabled: boolean;
-    variant: MoleButtonVariant;
+    variant: GameButtonVariant;
   };
 
   let el: GameButtonTest;
@@ -22,7 +22,7 @@ describe('game-button', () => {
     await el.updateComplete;
 
     const btn = el.shadowRoot!.querySelector('button')!;
-    expect(btn.className).toBe(MoleButtonVariant.DEFAULT);
+    expect(btn.className).toBe(GameButtonVariant.DEFAULT);
     expect(btn.disabled).toBe(false);
   });
 
@@ -35,7 +35,7 @@ describe('game-button', () => {
   });
 
   it('renders icon slot only for back variant', async () => {
-    el.setAttribute('variant', MoleButtonVariant.BACK);
+    el.setAttribute('variant', GameButtonVariant.BACK);
     el.innerHTML = `<span slot="icon" class="test-icon"></span>`;
 
     await el.updateComplete;

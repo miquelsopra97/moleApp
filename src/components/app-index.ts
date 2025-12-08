@@ -141,8 +141,8 @@ export class AppIndex extends LitElement {
    * @param {CustomEvent} e - Contains the new difficulty level in `detail.value`.
    */
   private readonly onLevelChange = (e: CustomEvent) => {
-    const value = e.detail.value as 'Low' | 'Medium' | 'High';
-    this.level = value as DifficultyLevel;
+    const value = e.detail.value as DifficultyLevel;
+    this.level = value;
     this.controller.publish('game-level', value);
   };
 

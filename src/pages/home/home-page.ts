@@ -8,8 +8,6 @@ import '../../components/game-button/game-button.js';
 import '../../components/game-input/game-input.js';
 import '../../components/game-form/game-form.js';
 
-import { PageLayout } from '../../components/page-layout/page-layout.js';
-
 // @ts-ignore
 @customElement('home-page')
 export class HomePage extends PageTransitionsMixin(PageMixin(LitElement)) {
@@ -39,7 +37,7 @@ export class HomePage extends PageTransitionsMixin(PageMixin(LitElement)) {
    */
   firstUpdated(props: any) {
     super.firstUpdated?.(props);
-    this._layout = this.renderRoot.querySelector('page-layout') as PageLayout | null;
+    this._layout = this.renderRoot.querySelector('page-layout');
   }
 
   /**
