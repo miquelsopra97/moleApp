@@ -12,7 +12,7 @@ export class GameInput extends LitElement {
    * @type {string}
    */
   @property({ type: String })
-  label = '';
+  label: string = '';
 
   /**
    * Placeholder text shown inside the input field.
@@ -20,7 +20,7 @@ export class GameInput extends LitElement {
    * @type {string}
    */
   @property({ type: String })
-  placeholder = '';
+  placeholder: string = '';
 
   /**
    * Current value of the input. Sanitized on every keystroke to allow only letters, numbers and
@@ -29,7 +29,7 @@ export class GameInput extends LitElement {
    * @type {string}
    */
   @property({ type: String })
-  value = '';
+  value: string = '';
 
   /**
    * Error message displayed below the input. When null, no error is shown.

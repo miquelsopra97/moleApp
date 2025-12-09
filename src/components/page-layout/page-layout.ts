@@ -9,7 +9,7 @@ export class PageLayout extends LitElement {
    * Controller used to publish and subscribe to events between components. Handles communication
    * such as scroll notifications.
    */
-  elementController = new ElementController(this);
+  elementController: ElementController = new ElementController(this);
 
   /**
    * Reference to the scrollable container element inside the shadow DOM. Assigned during

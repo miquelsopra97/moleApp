@@ -16,7 +16,7 @@ export class MoleButton extends LitElement {
    * @type {boolean}
    */
   @property({ type: Boolean })
-  active = false;
+  active: boolean = false;
 
   /**
    * Sound played when an active mole is clicked. Uses the app's BASE_URL to resolve the audio path

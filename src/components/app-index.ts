@@ -7,7 +7,7 @@ import { styles } from './app-index.css.js';
 import '@open-cells/page-transitions/page-transition-head-styles.js';
 import './game-select/game-select.js';
 import { globalFontCSS } from '../../styles/global-styles.css.js';
-import { DifficultyLevel } from '../models/enums/game-select.enum.js';
+import { DifficultyLevel, TimeMode } from '../models/enums/game-select.enum.js';
 import moleLogo from '../../public/images/logomole.png';
 
 document.adoptedStyleSheets = [...document.adoptedStyleSheets, globalFontCSS];
@@ -23,46 +23,56 @@ startApp({
 @customElement('app-index')
 export class AppIndex extends LitElement {
   /**
-   * Controller handling event publishing and subscriptions between components in the OpenCells
+   * Controller responsible for managing publish/subscribe communication within the OpenCells
    * ecosystem.
    *
    * @private
+   * @type {ElementController}
    */
-  private readonly controller = new ElementController(this);
+  private readonly controller: ElementController = new ElementController(this);
 
   /**
-   * Reference to the header element inside the component’s shadow DOM. Used to toggle the
-   * `scrolled` class when page scrolls.
+   * Reference to the header element inside the shadow DOM. Used for toggling the `scrolled` class
+   * based on scroll events.
    *
    * @private
+   * @type {HTMLElement | null}
    */
   private headerEl: HTMLElement | null = null;
 
   static readonly styles = styles;
 
   /**
-   * Current active route extracted from the URL hash. Determines which view/layout should be
-   * rendered.
+   * Current route extracted from the URL hash. Examples:
+   *
+   * - "home"
+   * - "game"
    *
    * @private
    * @type {string}
    */
   @state()
-  private currentRoute = this.getRoute();
+  private currentRoute: string = this.getRoute();
 
   /**
-   * Player name stored in localStorage and updated through events. Displayed in the header during
-   * the game.
+   * Player name stored and synced via localStorage and events.
    *
    * @private
    * @type {string}
    */
   @state()
-  private playerName = '';
+  private playerName: string = '';
 
   /**
-   * Current selected difficulty level. Synced with <select-game> and broadcasted via
-   * ElementController.
+   * Currently selected difficulty level.
+   *
+   * Possible values:
+   *
+   * - DifficultyLevel.LOW
+   * - DifficultyLevel.MEDIUM
+   * - DifficultyLevel.HIGH
+   *
+   * This value is synced with `<game-select>` and broadcast through the controller.
    *
    * @private
    * @type {DifficultyLevel}
@@ -70,11 +80,29 @@ export class AppIndex extends LitElement {
   @state()
   private level: DifficultyLevel = DifficultyLevel.LOW;
 
-  /** Sets up event subscriptions and restores user preferences. */
+  /**
+   * Selected match duration.
+   *
+   * Stored as **string**, because `<game-select>` always emits string values.
+   *
+   * Possible values:
+   *
+   * - "30" → short match
+   * - "60" → medium match
+   * - "90" → long match
+   *
+   * This mirrors the numeric values in `TimeMode`, but intentionally stored as string.
+   *
+   * @private
+   * @type {string}
+   */
+  @state()
+  private time: string = String(TimeMode.SHORT);
+
+  /** Sets up subscriptions and restores saved state. */
   connectedCallback() {
     super.connectedCallback();
 
-    // Listen to scroll events from page-layout
     this.controller.subscribe('scroll', (el: HTMLElement) => {
       if (this.headerEl) {
         el.scrollTop > 0
@@ -83,23 +111,17 @@ export class AppIndex extends LitElement {
       }
     });
 
-    // Restore player name from localStorage
     const savedName = localStorage.getItem('playerName');
-    if (savedName) {
-      this.playerName = savedName;
-    }
+    if (savedName) this.playerName = savedName;
 
-    // Listen for updates to player name
     this.controller.subscribe('player-name', (name: string) => {
       this.playerName = name;
       localStorage.setItem('playerName', name);
     });
 
-    // Listen for hash route changes
     globalThis.addEventListener('hashchange', this.onHashChange);
   }
 
-  /** Clean-up: unsubscribe from controller events and remove listeners. */
   disconnectedCallback() {
     globalThis.removeEventListener('hashchange', this.onHashChange);
     this.controller.unsubscribe('scroll');
@@ -107,13 +129,12 @@ export class AppIndex extends LitElement {
     super.disconnectedCallback();
   }
 
-  /** Obtains reference to the <header> element after render. */
   firstUpdated() {
     this.headerEl = this.shadowRoot?.querySelector('header') ?? null;
   }
 
   /**
-   * Updates the current route when the location hash changes.
+   * Handles hash change from browser navigation.
    *
    * @private
    */
@@ -122,36 +143,43 @@ export class AppIndex extends LitElement {
   };
 
   /**
-   * Extracts the route from the location hash using the pattern `#!/something`.
+   * Extracts the route name from the hash URL.
    *
    * @private
-   * @returns {string} The current route name, e.g. "home" or "game".
+   * @returns {string} The current route (default: "home")
    */
   private getRoute() {
     const hash = globalThis.location.hash || '';
-    const match = new RegExp(/^#!\/([^?]*)/).exec(hash);
+    const match = /^#!\/([^?]*)/.exec(hash);
     return match?.[1] || 'home';
   }
 
   /**
-   * Handles difficulty level changes from <select-game> and broadcasts the update through
-   * ElementController.
+   * Handles difficulty level updates coming from `<game-select>`. Re-broadcasts the new value to
+   * the rest of the application.
    *
    * @private
-   * @param {CustomEvent} e - Contains the new difficulty level in `detail.value`.
+   * @param {CustomEvent} e - Event containing the selected difficulty level.
    */
   private readonly onLevelChange = (e: CustomEvent) => {
-    const value = e.detail.value as DifficultyLevel;
+    const value = e.detail.value;
     this.level = value;
     this.controller.publish('game-level', value);
   };
 
   /**
-   * Whether the current route corresponds to the game screen.
+   * Handles match time updates coming from `<game-select>`. Re-broadcasts the selected time value.
    *
    * @private
-   * @returns {boolean}
+   * @param {CustomEvent} e - Event containing the selected time.
    */
+  private readonly onTimeChange = (e: CustomEvent) => {
+    const value = e.detail.value;
+    this.time = value;
+    this.controller.publish('game-time', value);
+  };
+
+  /** Whether the current route corresponds to the game screen. */
   private get isGame() {
     return this.currentRoute === 'game';
   }
@@ -168,11 +196,11 @@ export class AppIndex extends LitElement {
   /**
    * Renders the dynamic header:
    *
-   * - Home header (minimal)
-   * - Game header (avatar, player name, difficulty selector)
+   * - **Home header:** only shows the Mole Game logo.
+   * - **Game header:** shows avatar, player name, difficulty selector and time selector.
    *
    * @private
-   * @returns {TemplateResult}
+   * @returns {import('lit').TemplateResult}
    */
   private renderHeader() {
     if (!this.isGame) {
@@ -198,6 +226,13 @@ export class AppIndex extends LitElement {
               .value=${this.level}
               .options=${[DifficultyLevel.LOW, DifficultyLevel.MEDIUM, DifficultyLevel.HIGH]}
               @level-change=${this.onLevelChange}
+            ></game-select>
+            <span class="level-label" style="margin-left: 1rem;">Tiempo</span>
+            <game-select
+              type="time"
+              .value=${this.time}
+              .options=${[String(TimeMode.SHORT), String(TimeMode.MEDIUM), String(TimeMode.LONG)]}
+              @time-change=${this.onTimeChange}
             ></game-select>
           </div>
         </div>

@@ -13,7 +13,7 @@ export class GameButton extends LitElement {
    * @type {string}
    */
   @property({ type: String })
-  text = '';
+  text: string = '';
 
   /**
    * When set to BACK, an icon slot will be rendered before the label.

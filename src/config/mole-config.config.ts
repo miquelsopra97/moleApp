@@ -16,7 +16,7 @@ export const MOLE_LEVELS: IMoleLevels = {
   },
 };
 
-export const SIZES_MOLETABLE = 3;
+export const SIZES_MOLETABLE: number = 3;
 
 /**
  * Returns the mole configuration (speed, timing, etc.) for a given level. Falls back to Low if

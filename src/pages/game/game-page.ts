@@ -6,7 +6,6 @@ import { PageTransitionsMixin } from '@open-cells/page-transitions';
 import '../../components/page-layout/page-layout.js';
 import '../../components/mole-table/mole-table.js';
 import '../../components/game-button/game-button.js';
-import '../../components/game-select/game-select.js';
 
 import {
   getMoleSettings,
@@ -29,7 +28,7 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
    * @protected
    */
   @state()
-  protected _playerName = '';
+  protected _playerName: string = '';
 
   /**
    * Current score accumulated during the match.
@@ -38,7 +37,7 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
    * @protected
    */
   @state()
-  protected _score = 0;
+  protected _score: number = 0;
 
   /**
    * Indicates whether the game is currently active.
@@ -47,7 +46,7 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
    * @type {boolean}
    */
   @state()
-  private _isPlaying = false;
+  private _isPlaying: boolean = false;
 
   /**
    * Boolean grid indicating which moles are active.
@@ -88,13 +87,12 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
   /**
    * Selected game duration (in seconds).
    *
-   * This represents the currently chosen time option for the game. It is bound to the `<game-select
-   * type="time">` component and updates whenever the user triggers a `time-change` event.
+   * Value received from the header (app-index) via "game-time" event.
    *
    * @default '30'
    */
   @state()
-  private _selectedTime: string = '30';
+  private _selectedTime: string = String(TimeMode.SHORT);
 
   /**
    * Current mole spawn mode.
@@ -109,14 +107,14 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
   private _molesMode: MoleMode = MoleMode.ONE;
 
   /**
-   * Interval ID for the timer countdown.
+   * Interval ID for the countdown timer.
    *
    * @private
    * @type {number | null}
    */
   private _timerId: number | null = null;
 
-  /** Loads player name, subscribes to events and difficulty changes. */
+  /** Loads player name, subscribes to events and difficulty/time updates. */
   firstUpdated(props: any) {
     super.firstUpdated?.(props);
 
@@ -144,12 +142,19 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
         this._startLoop();
       }
     });
+
+    this.subscribe('game-time', (time: string) => {
+      this._selectedTime = time;
+      this._timeLeft = Number(time);
+      this._clearGame();
+    });
   }
 
   /** Clean up subscriptions when leaving the page. */
   disconnectedCallback(): void {
     this.unsubscribe('player-name');
     this.unsubscribe('game-level');
+    this.unsubscribe('game-time');
     super.disconnectedCallback();
   }
 
@@ -166,11 +171,7 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
     }
   }
 
-  /**
-   * Stops and clears the countdown timer.
-   *
-   * @private
-   */
+  /** Stops and clears the countdown timer. */
   private _clearTimer() {
     if (this._timerId) {
       clearInterval(this._timerId);
@@ -178,41 +179,17 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
     }
   }
 
-  /**
-   * Toggles the mole spawn mode between:
-   *
-   * - `1` → Only one mole appears at a time.
-   * - `2` → Two moles appear at the same time.
-   *
-   * Each click on the button switches between the two modes.
-   *
-   * @private
-   */
+  /** Toggle mole spawn mode */
   private _controlMolesMode() {
     this._molesMode = this._molesMode === MoleMode.ONE ? MoleMode.TWO : MoleMode.ONE;
   }
 
-  private onTimeChange = (e: CustomEvent) => {
-    const newTime = Number(e.detail.value);
-    this._selectedTime = newTime.toString();
-    this._clearGame();
-    this._timeLeft = newTime;
-  };
-
-  /**
-   * Saves the player's high score to localStorage.
-   *
-   * @private
-   */
+  /** Saves the player's high score. */
   private _saveHighScore() {
     saveScore(this._playerName, this._score, this._selectedTime);
   }
 
-  /**
-   * Toggles the game state between start and stop. score.
-   *
-   * @private
-   */
+  /** Toggle game start/stop. */
   private _controllerGame() {
     this._isPlaying = !this._isPlaying;
 
@@ -225,11 +202,7 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
     }
   }
 
-  /**
-   * Starts the mole appearance loop. Interval depends on selected difficulty.
-   *
-   * @private
-   */
+  /** Starts the mole appearance loop. */
   private _startLoop() {
     const settings = getMoleSettings(this.level);
     const interval = settings.interval;
@@ -259,11 +232,7 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
     }, interval);
   }
 
-  /**
-   * Stops the mole appearance loop and clears active moles.
-   *
-   * @private
-   */
+  /** Stops the loop and clears active moles. */
   private _stopLoop() {
     if (this._intervalId) {
       clearInterval(this._intervalId);
@@ -272,11 +241,7 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
     this._activeMoles = [];
   }
 
-  /**
-   * Starts the countdown timer. Ends the game at 0 seconds.
-   *
-   * @private
-   */
+  /** Starts the countdown timer. */
   private _startTimer() {
     this._clearTimer();
 
@@ -297,12 +262,7 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
     }, 1000);
   }
 
-  /**
-   * Fully resets the game state.
-   *
-   * Stops all active intervals (mole loop and timer), clears the board, restores default values
-   * (score, time, mode), and prepares the page for a fresh new game session.
-   */
+  /** Fully resets the game state. */
   private _clearGame() {
     this._isPlaying = false;
 
@@ -310,22 +270,19 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
       clearInterval(this._intervalId);
       this._intervalId = null;
     }
+
     if (this._timerId) {
       clearInterval(this._timerId);
       this._timerId = null;
     }
 
     this._score = 0;
-    this._timeLeft = 30;
+    this._timeLeft = Number(this._selectedTime);
     this._activeMoles = new Array(SIZES_MOLETABLE * SIZES_MOLETABLE).fill(false);
     this._molesMode = MoleMode.ONE;
   }
 
-  /**
-   * Navigates back to the home page and resets the game state.
-   *
-   * @private
-   */
+  /** Go back home and reset game. */
   private _goBack() {
     this._clearGame();
     this._selectedTime = this._timeLeft.toString();
@@ -350,16 +307,6 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
           </svg>
         </game-button>
         <h2>Puntuación: ${this._score}</h2>
-
-        <div>
-          <span>Seleccione tiempo:</span>
-          <game-select
-            type="time"
-            .value=${this._selectedTime}
-            .options=${['30', '60', '90']}
-            @time-change=${this.onTimeChange}
-          ></game-select>
-        </div>
         <h4>Tiempo Restante: ${this._timeLeft}s</h4>
         <mole-table
           size=${SIZES_MOLETABLE}
@@ -368,7 +315,7 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
         ></mole-table>
         <game-button
           style="padding-bottom: 0.5rem"
-          text="${this._molesMode === MoleMode.ONE ? 'Modo: 1 topo' : 'Modo: 2 topos'}"
+          text="${this._molesMode === MoleMode.ONE ? '1 Topo' : '2 Topos'}"
           @game-click=${this._controlMolesMode}
         ></game-button>
         <game-button

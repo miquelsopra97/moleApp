@@ -15,7 +15,7 @@ export class MoleTable extends LitElement {
    * @type {number}
    */
   @property({ type: Number })
-  size = SIZES_MOLETABLE;
+  size: number = SIZES_MOLETABLE;
 
   /**
    * Boolean array indicating which mole positions are active. The length should match `size *
