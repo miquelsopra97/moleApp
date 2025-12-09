@@ -209,7 +209,7 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
    * @private
    */
   private _saveHighScore() {
-    saveScore(this._playerName, this._score);
+    saveScore(this._playerName, this._score, this._selectedTime);
   }
 
   /**
@@ -293,7 +293,7 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
         this._saveHighScore();
         this._clearTimer();
 
-        this._timeLeft = 30;
+        this._timeLeft = Number(this._selectedTime);
         this._score = 0;
       }
 

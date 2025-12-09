@@ -47,12 +47,12 @@ export class NotFoundPage extends PageTransitionsMixin(LitElement) {
   render() {
     return html`
       <page-layout>
-        <div class="page-header">
-          <ul class="page-header-sup">
+        <div>
+          <ul>
             <li>
               <md-outlined-button aria-label="Back to home" href="#!/">
                 <md-icon filled slot="icon">arrow_back</md-icon>
-                <span class="md-outlined-button-text">Back to</span>
+                <span>Back to</span>
                 home
               </md-outlined-button>
             </li>

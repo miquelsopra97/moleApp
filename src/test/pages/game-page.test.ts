@@ -4,10 +4,11 @@ import '../../pages/game/game-page.js';
 import { saveScore } from '../../config/score-config.config.js';
 import { getMoleSettings, SIZES_MOLETABLE } from '../../config/mole-config.config.js';
 import { MoleMode } from '../../models/enums/moles-mode.enum.js';
+import { DifficultyLevel } from '../../models/enums/game-select.enum.js';
 
 interface GamePage extends HTMLElement {
   subscribe: (ev: string, cb: Function) => void;
-  firstUpdated(): unknown;
+  firstUpdated(): void;
   performUpdate: any;
   params: { playerName: string };
   publish(eventName: string, data?: unknown): void;
@@ -30,13 +31,13 @@ interface GamePage extends HTMLElement {
   _intervalId: number | null;
   _timerId: number | null;
   _timeLeft: number;
-  level: any;
+  level: DifficultyLevel;
   __testCallbacks: any;
 
   _molesMode: MoleMode;
 }
 
-describe('game-page (unit)', () => {
+describe('game-page', () => {
   let el: GamePage;
 
   beforeEach(() => {
@@ -99,7 +100,7 @@ describe('game-page (unit)', () => {
 
     el._saveHighScore();
 
-    expect(saveScore).toHaveBeenCalledWith('Miquel', 42);
+    expect(saveScore).toHaveBeenCalledWith('Miquel', 42, '30');
   });
 
   it('_startTimer decreases time and ends game at zero', () => {

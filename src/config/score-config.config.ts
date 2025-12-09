@@ -3,28 +3,34 @@ import { IScoreEntry } from '../models/interfaces/score.interfaces';
 /**
  * Saves a player's score in localStorage.
  *
- * - If the player already exists, their score is updated only if the new score is higher.
- * - If the player does not exist, a new entry is added.
- * - The score list is always sorted from highest to lowest.
+ * @param {string} name - Player name.
+ * @param {number} score - Score achieved by the player.
+ * @param {number} time - Game duration used (e.g., 30, 60, 90).
  */
-export function saveScore(name: string, score: number): void {
-  const stored: IScoreEntry[] = JSON.parse(localStorage.getItem('scores') || '[]');
+export function saveScore(name: string, score: number, time: string) {
+  const stored = JSON.parse(localStorage.getItem('scores') || '[]');
 
-  // Check if the player already exists in the stored list
-  const existing = stored.find((entry) => entry.name === name);
+  const existing = stored.find((entry: IScoreEntry) => entry.name === name);
+  const newTime = Number(time);
 
   if (existing) {
-    // Update only if the new score is higher
+    const oldTime = Number(existing.time);
+
     if (score > existing.score) {
       existing.score = score;
+      existing.time = newTime;
+    } else if (score === existing.score && newTime < oldTime) {
+      existing.time = newTime;
     }
   } else {
-    // If player doesn't exist, add a new entry
-    stored.push({ name, score });
+    stored.push({ name, score, time: newTime });
   }
 
-  // Sort scores in descending order (highest first)
-  stored.sort((a, b) => b.score - a.score);
+  stored.sort((a: IScoreEntry, b: IScoreEntry) => {
+    if (b.score !== a.score) return b.score - a.score;
+
+    return Number(a.time) - Number(b.time);
+  });
 
   localStorage.setItem('scores', JSON.stringify(stored));
 }

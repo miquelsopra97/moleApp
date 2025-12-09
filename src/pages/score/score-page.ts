@@ -48,7 +48,7 @@ export class ScorePage extends PageTransitionsMixin(PageMixin(LitElement)) {
                   (item, i) => html`
                     <li>
                       <strong>${i + 1}. ${item.name}</strong>
-                      — ${item.score} pts
+                      | ${item.score} pts | ${item.time} segundos
                     </li>
                   `,
                 )}
