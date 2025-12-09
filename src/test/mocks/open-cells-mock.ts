@@ -40,7 +40,6 @@ vi.mock('@open-cells/page-transitions', () => ({
 
 // ------------------------------------------------------
 // Mock: @open-cells/element-controller
-// (expuesto globalmente para poder usar sus mocks en tests)
 // ------------------------------------------------------
 export const subscribeMock = vi.fn();
 export const publishMock = vi.fn();

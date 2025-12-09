@@ -14,11 +14,9 @@ describe('score-config (unit)', () => {
     vi.resetModules();
     vi.unstubAllGlobals();
 
-    //Quitamos cualquier mock del módulo
     vi.doUnmock('../../config/score-config.config.js');
     vi.unmock('../../config/score-config.config.js');
 
-    //Mock limpio de localStorage
     getItem = vi.fn();
     setItem = vi.fn();
 
@@ -27,7 +25,6 @@ describe('score-config (unit)', () => {
       setItem,
     });
 
-    //Import real SIEMPRE al final
     const mod = await import('../../config/score-config.config.js');
     saveScore = mod.saveScore;
     getScores = mod.getScores;
