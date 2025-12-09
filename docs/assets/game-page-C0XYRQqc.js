@@ -1,4 +1,4 @@
-import{i as P,n as v,a as f,x as p,t as g,D as T,T as $,r as c}from"./index-C6D7TcyR.js";import{P as I}from"./game-button-Cvju09-w.js";import{P as L}from"./PageTransitionsMixin-C3JExxZE.js";import{s as O}from"./score-config.config-DB4tY8vk.js";const N=P`
+import{i as P,n as v,a as f,x as p,t as g,D as T,T as $,r as c}from"./index-CG6H0ypI.js";import{P as I}from"./game-button-Br14w4w2.js";import{P as L}from"./PageTransitionsMixin-C3JExxZE.js";import{s as O}from"./score-config.config-DB4tY8vk.js";const N=P`
   :host {
     display: block;
     width: fit-content;

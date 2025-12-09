@@ -85,6 +85,14 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
   @state()
   private _timeLeft: TimeMode = TimeMode.SHORT;
 
+  /**
+   * Selected game duration (in seconds).
+   *
+   * This represents the currently chosen time option for the game. It is bound to the `<game-select
+   * type="time">` component and updates whenever the user triggers a `time-change` event.
+   *
+   * @default '30'
+   */
   @state()
   private _selectedTime: string = '30';
 
