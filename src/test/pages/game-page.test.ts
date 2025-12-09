@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import type { TemplateResult } from 'lit';
 import '../../pages/game/game-page.js';
 import { saveScore } from '../../config/score-config.config.js';
-import { getMoleSettings } from '../../config/mole-config.config.js';
+import { getMoleSettings, SIZES_MOLETABLE } from '../../config/mole-config.config.js';
 
 interface GamePage extends HTMLElement {
   publish(eventName: string, data?: unknown): void;
@@ -267,5 +267,31 @@ describe('game-page (unit)', () => {
     expect(el._activeMoles.some(Boolean)).toBe(false);
 
     el._stopLoop();
+  });
+
+  it('_clearGame fully resets the game state', () => {
+    el._isPlaying = true;
+    el._score = 50;
+    el._timeLeft = 5;
+    el._molesMode = 2;
+    el._activeMoles = [true, true, false] as any;
+
+    el._intervalId = 123 as unknown as number;
+    el._timerId = 456 as unknown as number;
+
+    (el as any)._clearGame();
+
+    expect(el._isPlaying).toBe(false);
+
+    expect(el._intervalId).toBeNull();
+    expect(el._timerId).toBeNull();
+
+    expect(el._score).toBe(0);
+    expect(el._timeLeft).toBe(30);
+
+    expect(el._activeMoles.length).toBe(SIZES_MOLETABLE * SIZES_MOLETABLE);
+    expect(el._activeMoles.every((mole) => mole === false)).toBe(true);
+
+    expect(el._molesMode).toBe(1);
   });
 });

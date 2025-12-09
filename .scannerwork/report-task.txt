@@ -1,7 +1,0 @@
-organization=miquelsopra97
-projectKey=miquelsopra97_moleapp
-serverUrl=https://sonarcloud.io
-serverVersion=8.0.0.77146
-dashboardUrl=https://sonarcloud.io/dashboard?id=miquelsopra97_moleapp
-ceTaskId=AZsCsghuw1DQOWW9NczT
-ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AZsCsghuw1DQOWW9NczT

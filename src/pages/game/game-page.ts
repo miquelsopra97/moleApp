@@ -273,10 +273,37 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
         this._stopLoop();
         this._saveHighScore();
         this._clearTimer();
+
+        this._timeLeft = 30;
+        this._score = 0;
       }
 
       this.requestUpdate();
     }, 1000);
+  }
+
+  /**
+   * Fully resets the game state.
+   *
+   * Stops all active intervals (mole loop and timer), clears the board, restores default values
+   * (score, time, mode), and prepares the page for a fresh new game session.
+   */
+  private _clearGame() {
+    this._isPlaying = false;
+
+    if (this._intervalId) {
+      clearInterval(this._intervalId);
+      this._intervalId = null;
+    }
+    if (this._timerId) {
+      clearInterval(this._timerId);
+      this._timerId = null;
+    }
+
+    this._score = 0;
+    this._timeLeft = 30;
+    this._activeMoles = new Array(SIZES_MOLETABLE * SIZES_MOLETABLE).fill(false);
+    this._molesMode = MoleMode.ONE;
   }
 
   /**
@@ -285,15 +312,7 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
    * @private
    */
   private _goBack() {
-    this._isPlaying = false;
-
-    if (this._intervalId) {
-      clearInterval(this._intervalId);
-      this._intervalId = null;
-    }
-
-    this._score = 0;
-    this._activeMoles = new Array(SIZES_MOLETABLE * SIZES_MOLETABLE).fill(false);
+    this._clearGame();
     this.navigate('home');
   }
 
