@@ -32,11 +32,15 @@ export function getRandomMoleIndex(): number {
 }
 
 /** Creates an array showing which mole is active. */
-export function generateActiveMoles(activeIndex: number): boolean[] {
+export function generateActiveMoles(indices: number[]): boolean[] {
   const total = SIZES_MOLETABLE * SIZES_MOLETABLE;
   const result = new Array(total).fill(false);
-  if (activeIndex >= 0 && activeIndex < total) {
-    result[activeIndex] = true;
-  }
+
+  indices.forEach((i) => {
+    if (i >= 0 && i < total) {
+      result[i] = true;
+    }
+  });
+
   return result;
 }

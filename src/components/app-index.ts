@@ -6,7 +6,7 @@ import { routes } from '../router/routes.js';
 import { styles } from './app-index.css.js';
 import '@open-cells/page-transitions/page-transition-head-styles.js';
 import './game-select/game-select.js';
-import { globalFontCSS } from '../styles/global-styles.css.js';
+import { globalFontCSS } from '../../styles/global-styles.css.js';
 import { DifficultyLevel } from '../models/enums/game-select.enum.js';
 import moleLogo from '../../public/images/logomole.png';
 

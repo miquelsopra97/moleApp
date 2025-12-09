@@ -16,6 +16,7 @@ import {
 
 import { saveScore } from '../../config/score-config.config.js';
 import { DifficultyLevel } from '../../models/enums/game-select.enum.js';
+import { MoleMode } from '../../models/enums/moles-mode.enum.js';
 
 // @ts-ignore
 @customElement('game-page')
@@ -81,7 +82,19 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
    * @type {number}
    */
   @state()
-  private _timeLeft: number = 60;
+  private _timeLeft: number = 30;
+
+  /**
+   * Current mole spawn mode.
+   *
+   * - `1` → Only one mole appears at a time.
+   * - `2` → Two moles appear simultaneously in random positions.
+   *
+   * @private
+   * @type {1 | 2}
+   */
+  @state()
+  private _molesMode: MoleMode = MoleMode.ONE;
 
   /**
    * Interval ID for the timer countdown.
@@ -158,6 +171,20 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
   }
 
   /**
+   * Toggles the mole spawn mode between:
+   *
+   * - `1` → Only one mole appears at a time.
+   * - `2` → Two moles appear at the same time.
+   *
+   * Each click on the button switches between the two modes.
+   *
+   * @private
+   */
+  private _controlMolesMode() {
+    this._molesMode = this._molesMode === MoleMode.ONE ? MoleMode.TWO : MoleMode.ONE;
+  }
+
+  /**
    * Saves the player's high score to localStorage.
    *
    * @private
@@ -167,8 +194,7 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
   }
 
   /**
-   * Toggles the game state between start and stop. Handles resetting, stopping loops, and saving
-   * score.
+   * Toggles the game state between start and stop. score.
    *
    * @private
    */
@@ -176,13 +202,9 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
     this._isPlaying = !this._isPlaying;
 
     if (this._isPlaying) {
-      this._score = 0;
-      this._timeLeft = 60;
-      this._clearTimer();
       this._startLoop();
       this._startTimer();
     } else {
-      this._saveHighScore();
       this._stopLoop();
       this._clearTimer();
     }
@@ -196,18 +218,28 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
   private _startLoop() {
     const settings = getMoleSettings(this.level);
     const interval = settings.interval;
-    const hideTime = interval - 100;
+    const hideTime = Math.max(0, interval - 100);
 
     this._intervalId = window.setInterval(() => {
       if (!this._isPlaying) return;
 
-      const index = getRandomMoleIndex();
-      this._activeMoles = generateActiveMoles(index);
+      const index1 = getRandomMoleIndex();
+      let indices = [index1];
+
+      if (this._molesMode === MoleMode.TWO) {
+        let index2;
+        do {
+          index2 = getRandomMoleIndex();
+        } while (index2 === index1);
+
+        indices.push(index2);
+      }
+
+      this._activeMoles = generateActiveMoles(indices);
 
       setTimeout(() => {
-        if (this._isPlaying) {
-          this._activeMoles = new Array(9).fill(false);
-        }
+        if (!this._isPlaying) return;
+        this._activeMoles = new Array(SIZES_MOLETABLE * SIZES_MOLETABLE).fill(false);
       }, hideTime);
     }, interval);
   }
@@ -268,33 +300,36 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
   render() {
     return html`
       <page-layout>
-        <div class="game-container">
-          <game-button variant="back" @game-click=${this._goBack}>
-            <svg
-              slot="icon"
-              fill="#ffff"
-              width="800px"
-              height="800px"
-              viewBox="0 0 52 52"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M50,24H6.83L27.41,3.41a2,2,0,0,0,0-2.82,2,2,0,0,0-2.82,0l-24,24a1.79,1.79,0,0,0-.25.31A1.19,1.19,0,0,0,.25,25c0,.07-.07.13-.1.2l-.06.2a.84.84,0,0,0,0,.17,2,2,0,0,0,0,.78.84.84,0,0,0,0,.17l.06.2c0,.07.07.13.1.2a1.19,1.19,0,0,0,.09.15,1.79,1.79,0,0,0,.25.31l24,24a2,2,0,1,0,2.82-2.82L6.83,28H50a2,2,0,0,0,0-4Z"
-              />
-            </svg>
-          </game-button>
-          <h3>Puntuación: ${this._score}</h3>
-          <h4>Tiempo: ${this._timeLeft}s</h4>
-          <mole-table
-            size=${SIZES_MOLETABLE}
-            .activeMoles=${this._activeMoles}
-            @mole-hit=${this._handleMoleHit}
-          ></mole-table>
-          <game-button
-            text="${this._isPlaying ? 'Parar partida' : 'Empezar partida'}"
-            @game-click=${this._controllerGame}
-          ></game-button>
-        </div>
+        <game-button variant="back" @game-click=${this._goBack}>
+          <svg
+            slot="icon"
+            fill="#ffff"
+            width="800px"
+            height="800px"
+            viewBox="0 0 52 52"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M50,24H6.83L27.41,3.41a2,2,0,0,0,0-2.82,2,2,0,0,0-2.82,0l-24,24a1.79,1.79,0,0,0-.25.31A1.19,1.19,0,0,0,.25,25c0,.07-.07.13-.1.2l-.06.2a.84.84,0,0,0,0,.17,2,2,0,0,0,0,.78.84.84,0,0,0,0,.17l.06.2c0,.07.07.13.1.2a1.19,1.19,0,0,0,.09.15,1.79,1.79,0,0,0,.25.31l24,24a2,2,0,1,0,2.82-2.82L6.83,28H50a2,2,0,0,0,0-4Z"
+            />
+          </svg>
+        </game-button>
+        <h3>Puntuación: ${this._score}</h3>
+        <h4>Tiempo: ${this._timeLeft}s</h4>
+        <mole-table
+          size=${SIZES_MOLETABLE}
+          .activeMoles=${this._activeMoles}
+          @mole-hit=${this._handleMoleHit}
+        ></mole-table>
+        <game-button
+          style="padding-bottom: 0.5rem"
+          text="${this._molesMode === MoleMode.ONE ? 'Modo: 1 topo' : 'Modo: 2 topos'}"
+          @game-click=${this._controlMolesMode}
+        ></game-button>
+        <game-button
+          text="${this._isPlaying ? 'Parar partida' : 'Empezar partida'}"
+          @game-click=${this._controllerGame}
+        ></game-button>
       </page-layout>
     `;
   }

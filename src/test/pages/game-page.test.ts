@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import type { TemplateResult } from 'lit';
 import '../../pages/game/game-page.js';
 import { saveScore } from '../../config/score-config.config.js';
+import { getMoleSettings } from '../../config/mole-config.config.js';
 
 interface GamePage extends HTMLElement {
   publish(eventName: string, data?: unknown): void;
@@ -22,6 +23,10 @@ interface GamePage extends HTMLElement {
   _timerId: number | null;
   _timeLeft: number;
   level: any;
+
+  _molesMode: 1 | 2;
+  _startLoop(): void;
+  _controlMolesMode(): void;
 }
 
 describe('game-page (unit)', () => {
@@ -197,5 +202,70 @@ describe('game-page (unit)', () => {
 
     expect(unsubSpy).toHaveBeenCalledWith('player-name');
     expect(unsubSpy).toHaveBeenCalledWith('game-level');
+  });
+
+  it('_controlMolesMode toggles between 1 and 2', () => {
+    el._molesMode = 1;
+    el._controlMolesMode();
+    expect(el._molesMode).toBe(2);
+
+    el._controlMolesMode();
+    expect(el._molesMode).toBe(1);
+  });
+
+  it('_startLoop generates exactly 1 mole in mode 1', () => {
+    el._isPlaying = true;
+    el._molesMode = 1;
+
+    el._startLoop();
+    vi.advanceTimersByTime(1000);
+
+    const active = el._activeMoles.filter(Boolean);
+    expect(active.length).toBe(1);
+
+    el._stopLoop();
+  });
+
+  it('_startLoop generates exactly 2 moles in mode 2', () => {
+    el._isPlaying = true;
+    el._molesMode = 2;
+
+    el._startLoop();
+    vi.advanceTimersByTime(1000);
+
+    const active = el._activeMoles.filter(Boolean);
+    expect(active.length).toBe(2);
+
+    (el as any)._stopLoop();
+  });
+
+  it('_startLoop does nothing if _isPlaying is false', () => {
+    el._isPlaying = false;
+    el._molesMode = 1;
+
+    el._startLoop();
+    vi.advanceTimersByTime(1000);
+
+    expect(el._activeMoles.some(Boolean)).toBe(false);
+
+    el._stopLoop();
+  });
+
+  it('_startLoop hides moles after timeout', () => {
+    el._isPlaying = true;
+    el._molesMode = 1;
+
+    el._startLoop();
+
+    vi.advanceTimersByTime(1);
+
+    const settings = getMoleSettings(el.level);
+    const hideTime = Math.max(0, settings.interval - 100);
+
+    vi.advanceTimersByTime(hideTime);
+
+    expect(el._activeMoles.some(Boolean)).toBe(false);
+
+    el._stopLoop();
   });
 });

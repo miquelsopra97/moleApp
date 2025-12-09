@@ -30,20 +30,38 @@ describe('mole-config', () => {
     }
   });
 
-  it('generateActiveMoles sets only activeIndex as true', () => {
-    const activeIndex = 4;
-    const arr = generateActiveMoles(activeIndex);
+  it('generateActiveMoles sets only the provided indices to true', () => {
+    const indices = [2, 5];
+    const arr = generateActiveMoles(indices);
     const total = SIZES_MOLETABLE * SIZES_MOLETABLE;
 
     expect(arr.length).toBe(total);
+
     arr.forEach((v, i) => {
-      if (i === activeIndex) expect(v).toBe(true);
+      if (indices.includes(i)) expect(v).toBe(true);
       else expect(v).toBe(false);
     });
   });
 
-  it('generateActiveMoles handles out-of-range', () => {
-    const arr = generateActiveMoles(50);
+  it('generateActiveMoles handles out-of-range indices gracefully', () => {
+    const arr = generateActiveMoles([50, -3]);
+    const total = SIZES_MOLETABLE * SIZES_MOLETABLE;
+
+    expect(arr.length).toBe(total);
+    expect(arr.every((v) => v === false)).toBe(true);
+  });
+
+  it('generateActiveMoles works with single index', () => {
+    const arr = generateActiveMoles([4]);
+    const total = SIZES_MOLETABLE * SIZES_MOLETABLE;
+
+    expect(arr[4]).toBe(true);
+    expect(arr.filter(Boolean).length).toBe(1);
+    expect(arr.length).toBe(total);
+  });
+
+  it('generateActiveMoles works with empty array', () => {
+    const arr = generateActiveMoles([]);
     const total = SIZES_MOLETABLE * SIZES_MOLETABLE;
 
     expect(arr.length).toBe(total);
