@@ -194,7 +194,11 @@ export class AppIndex extends LitElement {
           </div>
           <div class="header-right">
             <span class="level-label">Nivel</span>
-            <select-game .value=${this.level} @level-change=${this.onLevelChange}></select-game>
+            <game-select
+              .value=${this.level}
+              .options=${['Facil', 'Medio', 'Dificil']}
+              @level-change=${this.onLevelChange}
+            ></game-select>
           </div>
         </div>
       </header>

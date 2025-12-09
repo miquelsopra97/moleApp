@@ -1,71 +1,84 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import './game-select.js';
-import { DifficultyLevel } from '../../models/enums/game-select.enum.js';
+import { TypeSelect } from '../../models/enums/game-select.enum.js';
 
-describe('select-game', () => {
-  type SelectGameTest = HTMLElement & {
+describe('game-select', () => {
+  type GameSelectTest = HTMLElement & {
     updateComplete: Promise<void>;
-    value: DifficultyLevel;
+    type: TypeSelect;
+    value: string;
+    options: string[];
   };
 
-  let el: SelectGameTest;
+  let el: GameSelectTest;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     document.body.innerHTML = '';
-    el = document.createElement('select-game') as SelectGameTest;
+
+    el = document.createElement('game-select') as GameSelectTest;
+    el.options = ['LOW', 'MEDIUM', 'HIGH'];
+    el.value = 'LOW';
+
     document.body.appendChild(el);
-  });
-
-  const waitForUpdate = async () => {
     await el.updateComplete;
-  };
-
-  const getSelect = () => {
-    return el.shadowRoot!.querySelector('select') as HTMLSelectElement;
-  };
-
-  it('renders with default value LOW', async () => {
-    await waitForUpdate();
-
-    const select = getSelect();
-    expect(select.value).toBe(DifficultyLevel.LOW);
   });
 
-  it('updates select value when property changes', async () => {
-    el.value = DifficultyLevel.LOW;
-    await waitForUpdate();
-
-    const select = getSelect();
-    expect(select.value).toBe(DifficultyLevel.LOW);
+  it('renders select with options', async () => {
+    const select = el.shadowRoot!.querySelector('select')!;
+    expect(select).not.toBeNull();
+    expect(select.querySelectorAll('option').length).toBe(3);
   });
 
-  it('updates property when user selects an option', async () => {
-    await waitForUpdate();
+  it('renders initial value', async () => {
+    const select = el.shadowRoot!.querySelector('select')!;
+    expect(select.value).toBe('LOW');
+  });
 
-    const select = getSelect();
+  it('updates when property changes', async () => {
+    el.value = 'MEDIUM';
+    await el.updateComplete;
 
-    select.value = DifficultyLevel.MEDIUM;
+    const select = el.shadowRoot!.querySelector('select')!;
+    expect(select.value).toBe('MEDIUM');
+  });
+
+  it('updates component value on change', async () => {
+    const select = el.shadowRoot!.querySelector('select')!;
+    select.value = 'HIGH';
+
     select.dispatchEvent(new Event('change'));
+    await el.updateComplete;
 
-    await waitForUpdate();
-
-    expect(el.value).toBe(DifficultyLevel.MEDIUM);
+    expect(el.value).toBe('HIGH');
   });
 
-  it('emits level-change event when selection changes', async () => {
-    await waitForUpdate();
+  it('emits level-change when type = LEVEL', async () => {
+    el.type = TypeSelect.LEVEL;
+    await el.updateComplete;
 
     const handler = vi.fn();
     el.addEventListener('level-change', handler);
 
-    const select = getSelect();
-
-    select.value = DifficultyLevel.LOW;
+    const select = el.shadowRoot!.querySelector('select')!;
+    select.value = 'MEDIUM';
     select.dispatchEvent(new Event('change'));
 
-    await waitForUpdate();
+    expect(handler).toHaveBeenCalled();
+    expect(handler.mock.calls[0][0].detail).toEqual({ value: 'MEDIUM' });
+  });
 
-    expect(handler).toHaveBeenCalledTimes(1);
-    expect(handler.mock.calls[0][0].detail).toEqual({ value: DifficultyLevel.LOW });
+  it('emits time-change when type = TIME', async () => {
+    el.type = TypeSelect.TIME;
+    await el.updateComplete;
+
+    const handler = vi.fn();
+    el.addEventListener('time-change', handler);
+
+    const select = el.shadowRoot!.querySelector('select')!;
+    select.value = 'HIGH';
+    select.dispatchEvent(new Event('change'));
+
+    expect(handler).toHaveBeenCalled();
+    expect(handler.mock.calls[0][0].detail).toEqual({ value: 'HIGH' });
   });
 });

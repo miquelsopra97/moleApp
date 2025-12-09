@@ -6,6 +6,7 @@ import { PageTransitionsMixin } from '@open-cells/page-transitions';
 import '../../components/page-layout/page-layout.js';
 import '../../components/mole-table/mole-table.js';
 import '../../components/game-button/game-button.js';
+import '../../components/game-select/game-select.js';
 
 import {
   getMoleSettings,
@@ -15,7 +16,7 @@ import {
 } from '../../config/mole-config.config.js';
 
 import { saveScore } from '../../config/score-config.config.js';
-import { DifficultyLevel } from '../../models/enums/game-select.enum.js';
+import { DifficultyLevel, TimeMode } from '../../models/enums/game-select.enum.js';
 import { MoleMode } from '../../models/enums/moles-mode.enum.js';
 
 // @ts-ignore
@@ -82,7 +83,10 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
    * @type {number}
    */
   @state()
-  private _timeLeft: number = 30;
+  private _timeLeft: TimeMode = TimeMode.SHORT;
+
+  @state()
+  private _selectedTime: string = '30';
 
   /**
    * Current mole spawn mode.
@@ -183,6 +187,13 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
   private _controlMolesMode() {
     this._molesMode = this._molesMode === MoleMode.ONE ? MoleMode.TWO : MoleMode.ONE;
   }
+
+  private onTimeChange = (e: CustomEvent) => {
+    const newTime = Number(e.detail.value);
+    this._selectedTime = newTime.toString();
+    this._clearGame();
+    this._timeLeft = newTime;
+  };
 
   /**
    * Saves the player's high score to localStorage.
@@ -313,6 +324,7 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
    */
   private _goBack() {
     this._clearGame();
+    this._selectedTime = this._timeLeft.toString();
     this.navigate('home');
   }
 
@@ -333,8 +345,18 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
             />
           </svg>
         </game-button>
-        <h3>Puntuación: ${this._score}</h3>
-        <h4>Tiempo: ${this._timeLeft}s</h4>
+        <h2>Puntuación: ${this._score}</h2>
+
+        <div>
+          <span>Seleccione tiempo:</span>
+          <game-select
+            type="time"
+            .value=${this._selectedTime}
+            .options=${['30', '60', '90']}
+            @time-change=${this.onTimeChange}
+          ></game-select>
+        </div>
+        <h4>Tiempo Restante: ${this._timeLeft}s</h4>
         <mole-table
           size=${SIZES_MOLETABLE}
           .activeMoles=${this._activeMoles}

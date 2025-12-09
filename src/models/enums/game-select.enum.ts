@@ -3,3 +3,14 @@ export enum DifficultyLevel {
   MEDIUM = 'Medium',
   HIGH = 'High',
 }
+
+export enum TimeMode {
+  SHORT = 30,
+  MEDIUM = 60,
+  LONG = 90,
+}
+
+export enum TypeSelect {
+  LEVEL = 'level',
+  TIME = 'time',
+}

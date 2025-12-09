@@ -112,15 +112,16 @@ describe('app-index', () => {
     expect(name.textContent).toBe('Miquel');
   });
 
-  it('calls publish("game-level") when select-game emits level-change', async () => {
+  it('calls publish("game-level") when game-select emits level-change', async () => {
     globalThis.location.hash = '#!/game';
     await create();
 
-    const select = el.shadowRoot!.querySelector('select-game')!;
+    const select = el.shadowRoot!.querySelector('game-select')!;
     select.dispatchEvent(
       new CustomEvent('level-change', {
         detail: { value: 'Medium' },
         bubbles: true,
+        composed: true,
       }),
     );
 

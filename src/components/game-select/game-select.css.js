@@ -22,4 +22,9 @@ export const styles = css`
     background: #f5e7d4;
     color: #3a2818;
   }
+
+  :host([type='time']) select {
+    border-bottom-color: #7a5f3e;
+    color: #7a5f3e;
+  }
 `;
