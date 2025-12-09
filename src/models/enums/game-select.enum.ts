@@ -1,9 +1,8 @@
 export enum DifficultyLevel {
-  LOW = 'Low',
-  MEDIUM = 'Medium',
-  HIGH = 'High',
+  LOW = 'Fácil',
+  MEDIUM = 'Medio',
+  HIGH = 'Difícil',
 }
-
 export enum TimeMode {
   SHORT = 30,
   MEDIUM = 60,

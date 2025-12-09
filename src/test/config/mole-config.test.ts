@@ -7,17 +7,19 @@ import {
   MOLE_LEVELS,
 } from '../../config/mole-config.config.js';
 
+import { DifficultyLevel } from '../../models/enums/game-select.enum.js';
+
 describe('mole-config', () => {
   it('returns correct settings for known levels', () => {
-    expect(getMoleSettings('Low')).toEqual({ interval: 1000, points: 10 });
-    expect(getMoleSettings('Medium')).toEqual({ interval: 750, points: 20 });
-    expect(getMoleSettings('High')).toEqual({ interval: 500, points: 30 });
+    expect(getMoleSettings(DifficultyLevel.LOW)).toEqual({ interval: 1000, points: 10 });
+    expect(getMoleSettings(DifficultyLevel.MEDIUM)).toEqual({ interval: 750, points: 20 });
+    expect(getMoleSettings(DifficultyLevel.HIGH)).toEqual({ interval: 500, points: 30 });
   });
 
-  it('falls back to Low level when unknown level is provided', () => {
-    expect(getMoleSettings('UNKNOWN' as any)).toEqual(MOLE_LEVELS.Low);
-    expect(getMoleSettings(undefined)).toEqual(MOLE_LEVELS.Low);
-    expect(getMoleSettings(null)).toEqual(MOLE_LEVELS.Low);
+  it('falls back to default when unknown level is provided', () => {
+    expect(getMoleSettings('UNKNOWN' as any)).toEqual(MOLE_LEVELS[DifficultyLevel.LOW]);
+    expect(getMoleSettings(null)).toEqual(MOLE_LEVELS[DifficultyLevel.LOW]);
+    expect(getMoleSettings(null)).toEqual(MOLE_LEVELS[DifficultyLevel.LOW]);
   });
 
   it('getRandomMoleIndex always returns valid index', () => {

@@ -4,7 +4,5 @@ export interface IMolePoints {
 }
 
 export interface IMoleLevels {
-  Low: IMolePoints;
-  Medium: IMolePoints;
-  High: IMolePoints;
+  [key: string]: IMolePoints;
 }

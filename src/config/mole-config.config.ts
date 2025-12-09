@@ -1,15 +1,16 @@
+import { DifficultyLevel } from '../models/enums/game-select.enum';
 import type { IMoleLevels, IMolePoints } from '../models/interfaces/mole-levels.interfaces';
 
 export const MOLE_LEVELS: IMoleLevels = {
-  Low: {
+  [DifficultyLevel.LOW]: {
     interval: 1000,
     points: 10,
   },
-  Medium: {
+  [DifficultyLevel.MEDIUM]: {
     interval: 750,
     points: 20,
   },
-  High: {
+  [DifficultyLevel.HIGH]: {
     interval: 500,
     points: 30,
   },
@@ -21,8 +22,8 @@ export const SIZES_MOLETABLE = 3;
  * Returns the mole configuration (speed, timing, etc.) for a given level. Falls back to Low if
  * level is invalid or undefined.
  */
-export function getMoleSettings(level?: keyof IMoleLevels | null): IMolePoints {
-  return level && MOLE_LEVELS[level] ? MOLE_LEVELS[level] : MOLE_LEVELS.Low;
+export function getMoleSettings(level: DifficultyLevel | null): IMolePoints {
+  return level && MOLE_LEVELS[level] ? MOLE_LEVELS[level] : MOLE_LEVELS[DifficultyLevel.LOW];
 }
 
 /** Generates a random index inside the mole table grid. */

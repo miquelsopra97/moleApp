@@ -123,7 +123,6 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
     const playerName = this.params?.playerName as string | undefined;
     const savedName = localStorage.getItem('playerName');
 
-    // Restore player name
     if (playerName) {
       this._playerName = playerName;
     } else if (savedName) {
@@ -132,17 +131,14 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
       this._playerName = 'Player';
     }
 
-    // Listen for player name updates
     this.subscribe('player-name', (name: string) => {
       this._playerName = name;
       localStorage.setItem('playerName', name);
     });
 
-    // Listen for difficulty changes (from AppIndex)
     this.subscribe('game-level', (level: DifficultyLevel) => {
       this.level = level;
 
-      // Restart loop immediately if game is ongoing
       if (this._isPlaying) {
         this._stopLoop();
         this._startLoop();
