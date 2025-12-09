@@ -76,7 +76,7 @@ You'll see the unit test output and snapshots if any exist.
 
 ---
 
-# 📊 8. Coverage report
+# 📊 6. Coverage report
 
 Vitest generates coverage with:
 
@@ -95,9 +95,9 @@ That file is required for SonarCloud.
 
 ---
 
-# ☁️ 9. SonarCloud Integration
+# ☁️ 7. SonarCloud Integration
 
-## 📝 9.1. `sonar-project.properties`
+## 📝 7.1. `sonar-project.properties`
 
 The project includes a preconfigured `sonar-project.properties` file.
 
@@ -105,12 +105,12 @@ If you need to update it, it's located in the root of the repo.
 
 ---
 
-# 🔐 10. How to run SonarCloud analysis (for any team member)
+# 🔐 8. How to run SonarCloud analysis (for any team member)
 
 Anyone on the team can run SonarCloud **without installing Java** or a local SonarQube server.
 All you need is a personal token.
 
-## 10.1. Create your personal SonarCloud token
+## 8.1. Create your personal SonarCloud token
 
 1. Go to: [https://sonarcloud.io](https://sonarcloud.io)
 2. Top right → **My Account**
@@ -126,7 +126,7 @@ sqa_xxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 ---
 
-## 10.2. Export the token (temporary)
+## 8.2. Export the token (temporary)
 
 ```bash
 export SONAR_TOKEN="YOUR_TOKEN_HERE"
@@ -140,7 +140,7 @@ echo $SONAR_TOKEN
 
 ---
 
-## 10.3. Export token permanently
+## 8.3. Export token permanently
 
 Edit your `~/.zshrc`:
 
@@ -162,7 +162,7 @@ source ~/.zshrc
 
 ---
 
-## 10.4. Run SonarCloud analysis
+## 8.4. Run SonarCloud analysis
 
 ```bash
 npm run sonar
@@ -178,7 +178,7 @@ Once the analysis is finished, you can view the project dashboard on your SonarC
 
 ---
 
-# 🧩 11. Useful scripts
+# 🧩 9. Useful scripts
 
 | Script              | Action                                      |
 | ------------------- | ------------------------------------------- |
@@ -189,7 +189,7 @@ Once the analysis is finished, you can view the project dashboard on your SonarC
 
 ---
 
-# 🎯 12. Additional notes
+# 🎯 10. Additional notes
 
 * No need to install Java or a local SonarQube instance.
 * Each developer must generate their own SonarCloud token.
