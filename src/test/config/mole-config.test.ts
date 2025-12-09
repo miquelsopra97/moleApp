@@ -16,8 +16,8 @@ describe('mole-config', () => {
 
   it('falls back to Low level when unknown level is provided', () => {
     expect(getMoleSettings('UNKNOWN' as any)).toEqual(MOLE_LEVELS.Low);
-    expect(getMoleSettings(undefined as any)).toEqual(MOLE_LEVELS.Low);
-    expect(getMoleSettings(null as any)).toEqual(MOLE_LEVELS.Low);
+    expect(getMoleSettings(undefined)).toEqual(MOLE_LEVELS.Low);
+    expect(getMoleSettings(null)).toEqual(MOLE_LEVELS.Low);
   });
 
   it('getRandomMoleIndex always returns valid index', () => {

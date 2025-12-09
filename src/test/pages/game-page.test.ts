@@ -3,8 +3,13 @@ import type { TemplateResult } from 'lit';
 import '../../pages/game/game-page.js';
 import { saveScore } from '../../config/score-config.config.js';
 import { getMoleSettings, SIZES_MOLETABLE } from '../../config/mole-config.config.js';
+import { MoleMode } from '../../models/enums/moles-mode.enum.js';
 
 interface GamePage extends HTMLElement {
+  subscribe: (ev: string, cb: Function) => void;
+  firstUpdated(): unknown;
+  performUpdate: any;
+  params: { playerName: string };
   publish(eventName: string, data?: unknown): void;
   navigate(route: string, params?: unknown): void;
 
@@ -14,6 +19,9 @@ interface GamePage extends HTMLElement {
   _saveHighScore(): void;
   _goBack(): void;
   render(): TemplateResult;
+  _clearGame(): void;
+  _startLoop(): void;
+  _controlMolesMode(): void;
 
   _playerName: string;
   _score: number;
@@ -23,10 +31,9 @@ interface GamePage extends HTMLElement {
   _timerId: number | null;
   _timeLeft: number;
   level: any;
+  __testCallbacks: any;
 
-  _molesMode: 1 | 2;
-  _startLoop(): void;
-  _controlMolesMode(): void;
+  _molesMode: MoleMode;
 }
 
 describe('game-page (unit)', () => {
@@ -116,9 +123,9 @@ describe('game-page (unit)', () => {
     document.body.innerHTML = '<game-page></game-page>';
     const el = document.querySelector('game-page') as GamePage;
 
-    (el as any).params = { playerName: 'Miquel' };
+    el.params = { playerName: 'Miquel' };
 
-    await (el as any).performUpdate?.();
+    await el.performUpdate?.();
 
     expect(el._playerName).toBe('Miquel');
   });
@@ -129,7 +136,7 @@ describe('game-page (unit)', () => {
     document.body.innerHTML = '<game-page></game-page>';
     const el = document.querySelector('game-page') as GamePage;
 
-    await (el as any).performUpdate?.();
+    await el.performUpdate?.();
 
     expect(el._playerName).toBe('StoredName');
   });
@@ -145,7 +152,7 @@ describe('game-page (unit)', () => {
 
   it('updates player name when receiving "player-name" event', async () => {
     document.body.innerHTML = '<game-page></game-page>';
-    const el = document.querySelector('game-page') as any;
+    const el = document.querySelector('game-page') as GamePage;
 
     await el.performUpdate?.();
 
@@ -274,12 +281,12 @@ describe('game-page (unit)', () => {
     el._score = 50;
     el._timeLeft = 5;
     el._molesMode = 2;
-    el._activeMoles = [true, true, false] as any;
+    el._activeMoles = [true, true, false];
 
     el._intervalId = 123 as unknown as number;
     el._timerId = 456 as unknown as number;
 
-    (el as any)._clearGame();
+    (el as GamePage)._clearGame();
 
     expect(el._isPlaying).toBe(false);
 
