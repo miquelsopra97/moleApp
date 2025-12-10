@@ -100,7 +100,7 @@ describe('game-page', () => {
   it('_saveHighScore calls saveScore correctly', () => {
     el._playerName = 'Miquel';
     el._score = 42;
-    el._selectedTime = '30'; // expected input for saveScore
+    el._selectedTime = '30';
 
     el._saveHighScore();
 
