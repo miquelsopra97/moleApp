@@ -1,4 +1,4 @@
-import{i as O,n as c,a as y,x as v,t as b,r as _}from"./index-TZp76wuM.js";import{P as S}from"./game-button-CO_Y6CyP.js";import{P as I}from"./PageTransitionsMixin-C3JExxZE.js";import{s as H}from"./score-config.config-D_er6gHQ.js";const C=O`
+import{i as O,n as m,a as y,x as v,t as b,r as p}from"./index-CHk-AC9J.js";import{P as S}from"./game-button-6JjFM17g.js";import{P as I}from"./ElementController-DkYO4R2Y.js";import{s as H}from"./score-config.config-D_er6gHQ.js";const C=O`
   :host {
     display: block;
     width: fit-content;
@@ -52,7 +52,7 @@ import{i as O,n as c,a as y,x as v,t as b,r as _}from"./index-TZp76wuM.js";impor
               <img class="mole-img" src="${D}" alt="Mole" />
             `:void 0}
       </button>
-    `}};$.styles=z;N([c({type:Boolean})],$.prototype,"active",2);$=N([b("mole-button")],$);var h=(e=>(e.LOW="Fácil",e.MEDIUM="Medio",e.HIGH="Difícil",e))(h||{}),d=(e=>(e[e.SHORT=30]="SHORT",e[e.MEDIUM=60]="MEDIUM",e[e.LONG=90]="LONG",e))(d||{}),L=(e=>(e.LEVEL="level",e.TIME="time",e))(L||{});const w={[h.LOW]:{interval:1e3,points:10},[h.MEDIUM]:{interval:750,points:20},[h.HIGH]:{interval:500,points:30}},l=3;function T(e){return e&&w[e]?w[e]:w[h.LOW]}function x(){const e=l*l;return Math.floor(Math.random()*e)}function G(e){const t=l*l,i=new Array(t).fill(!1);return e.forEach(r=>{r>=0&&r<t&&(i[r]=!0)}),i}var W=Object.defineProperty,R=Object.getOwnPropertyDescriptor,E=(e,t,i,r)=>{for(var s=r>1?void 0:r?R(t,i):t,a=e.length-1,o;a>=0;a--)(o=e[a])&&(s=(r?o(t,i,s):o(s))||s);return r&&s&&W(t,i,s),s};let f=class extends y{constructor(){super(...arguments),this.size=l,this.activeMoles=[]}get _totalCells(){return this.size*this.size}_onMoleHit(e,t){var i;this.dispatchEvent(new CustomEvent("mole-hit",{detail:{index:e,active:(i=t.detail)==null?void 0:i.active},bubbles:!0,composed:!0}))}render(){return v`
+    `}};$.styles=z;N([m({type:Boolean})],$.prototype,"active",2);$=N([b("mole-button")],$);var h=(e=>(e.LOW="Fácil",e.MEDIUM="Medio",e.HIGH="Difícil",e))(h||{}),d=(e=>(e[e.SHORT=30]="SHORT",e[e.MEDIUM=60]="MEDIUM",e[e.LONG=90]="LONG",e))(d||{}),L=(e=>(e.LEVEL="level",e.TIME="time",e))(L||{});const w={[h.LOW]:{interval:1e3,points:10},[h.MEDIUM]:{interval:750,points:20},[h.HIGH]:{interval:500,points:30}},l=3;function T(e){return e&&w[e]?w[e]:w[h.LOW]}function x(){const e=l*l;return Math.floor(Math.random()*e)}function G(e){const t=l*l,i=new Array(t).fill(!1);return e.forEach(r=>{r>=0&&r<t&&(i[r]=!0)}),i}var W=Object.defineProperty,R=Object.getOwnPropertyDescriptor,E=(e,t,i,r)=>{for(var s=r>1?void 0:r?R(t,i):t,a=e.length-1,o;a>=0;a--)(o=e[a])&&(s=(r?o(t,i,s):o(s))||s);return r&&s&&W(t,i,s),s};let f=class extends y{constructor(){super(...arguments),this.size=l,this.activeMoles=[]}get _totalCells(){return this.size*this.size}_onMoleHit(e,t){var i;this.dispatchEvent(new CustomEvent("mole-hit",{detail:{index:e,active:(i=t.detail)==null?void 0:i.active},bubbles:!0,composed:!0}))}render(){return v`
       <div class="grid" style="grid-template-columns: repeat(${this.size}, 1fr);">
         ${[...new Array(this._totalCells).keys()].map(e=>{var i;const t=((i=this.activeMoles)==null?void 0:i[e])??!1;return v`
             <mole-button
@@ -61,7 +61,7 @@ import{i as O,n as c,a as y,x as v,t as b,r as _}from"./index-TZp76wuM.js";impor
             ></mole-button>
           `})}
       </div>
-    `}};f.styles=C;E([c({type:Number})],f.prototype,"size",2);E([c({type:Array})],f.prototype,"activeMoles",2);f=E([b("mole-table")],f);const U=O`
+    `}};f.styles=C;E([m({type:Number})],f.prototype,"size",2);E([m({type:Array})],f.prototype,"activeMoles",2);f=E([b("mole-table")],f);const U=O`
   :host {
     display: block;
     --header-bg: #7a5f3e;
@@ -149,10 +149,10 @@ import{i as O,n as c,a as y,x as v,t as b,r as _}from"./index-TZp76wuM.js";impor
             <option value="${e}">${e}</option>
           `)}
       </select>
-    `}};u.styles=B;M([c({type:String})],u.prototype,"type",2);M([c({type:String})],u.prototype,"value",2);M([c({type:Array})],u.prototype,"options",2);u=M([b("game-select")],u);var Z=Object.defineProperty,F=Object.getOwnPropertyDescriptor,P=(e,t,i,r)=>{for(var s=r>1?void 0:r?F(t,i):t,a=e.length-1,o;a>=0;a--)(o=e[a])&&(s=(r?o(t,i,s):o(s))||s);return r&&s&&Z(t,i,s),s};let g=class extends y{constructor(){super(...arguments),this.playerName="Player",this.level=h.LOW,this.time=String(d.SHORT)}get initial(){return(this.playerName||"P")[0].toUpperCase()}_onLevel(e){const t=e.detail.value;this.level=t,this.dispatchEvent(new CustomEvent("header-level",{detail:{value:t},bubbles:!0,composed:!0}))}_onTime(e){const t=e.detail.value;this.time=t,this.dispatchEvent(new CustomEvent("header-time",{detail:{value:t},bubbles:!0,composed:!0}))}render(){return v`
+    `}};u.styles=B;M([m({type:String})],u.prototype,"type",2);M([m({type:String})],u.prototype,"value",2);M([m({type:Array})],u.prototype,"options",2);u=M([b("game-select")],u);var Z=Object.defineProperty,F=Object.getOwnPropertyDescriptor,P=(e,t,i,r)=>{for(var s=r>1?void 0:r?F(t,i):t,a=e.length-1,o;a>=0;a--)(o=e[a])&&(s=(r?o(t,i,s):o(s))||s);return r&&s&&Z(t,i,s),s};let g=class extends y{constructor(){super(...arguments),this.playerName="Player",this.level=h.LOW,this.time=String(d.SHORT)}get _initial(){return(this.playerName||"P")[0].toUpperCase()}_onLevel(e){const t=e.detail.value;this.level=t,this.dispatchEvent(new CustomEvent("header-level",{detail:{value:t},bubbles:!0,composed:!0}))}_onTime(e){const t=e.detail.value;this.time=t,this.dispatchEvent(new CustomEvent("header-time",{detail:{value:t},bubbles:!0,composed:!0}))}render(){return v`
       <header class="header">
         <div class="header__left">
-          <div class="avatar">${this.initial}</div>
+          <div class="avatar">${this._initial}</div>
           <span class="player">${this.playerName}</span>
         </div>
 
@@ -175,11 +175,11 @@ import{i as O,n as c,a as y,x as v,t as b,r as _}from"./index-TZp76wuM.js";impor
           ></game-select>
         </div>
       </header>
-    `}};g.styles=U;P([c({type:String})],g.prototype,"playerName",2);P([c({type:String})],g.prototype,"level",2);P([c({type:String})],g.prototype,"time",2);g=P([b("game-header")],g);var p=(e=>(e[e.ONE=1]="ONE",e[e.TWO=2]="TWO",e))(p||{}),q=Object.defineProperty,J=Object.getOwnPropertyDescriptor,m=(e,t,i,r)=>{for(var s=r>1?void 0:r?J(t,i):t,a=e.length-1,o;a>=0;a--)(o=e[a])&&(s=(r?o(t,i,s):o(s))||s);return r&&s&&q(t,i,s),s};let n=class extends I(S(y)){constructor(){super(...arguments),this._playerName="",this.level=h.LOW,this.time=String(d.SHORT),this._score=0,this._isPlaying=!1,this._activeMoles=new Array(l*l).fill(!1),this._molesMode=p.ONE,this._selectedTime=String(d.SHORT),this._timeLeft=d.SHORT,this._intervalId=null,this._timerId=null}firstUpdated(){var i;const e=(i=this.params)==null?void 0:i.playerName,t=localStorage.getItem("playerName");this._playerName=e||t||"Player",this._selectedTime=this.time,this._timeLeft=Number(this.time)}connectedCallback(){super.connectedCallback(),this.subscribe("player-name",e=>{this._playerName=e})}disconnectedCallback(){this.unsubscribe("player-name"),super.disconnectedCallback()}_handleMoleHit(e){var t;if(this._isPlaying&&((t=e.detail)!=null&&t.active)){const{points:i}=T(this.level);this._score+=i}}_clearTimer(){this._timerId&&clearInterval(this._timerId),this._timerId=null}_controlMolesMode(){this._molesMode=this._molesMode===p.ONE?p.TWO:p.ONE}_saveHighScore(){H(this._playerName,this._score,this._selectedTime)}_controllerGame(){this._isPlaying=!this._isPlaying,this._isPlaying?(this._startLoop(),this._startTimer()):(this._stopLoop(),this._clearTimer())}_startLoop(){const t=T(this.level).interval,i=Math.max(0,t-100);this._intervalId=window.setInterval(()=>{if(!this._isPlaying)return;const r=x(),s=[r];if(this._molesMode===p.TWO){let a;do a=x();while(a===r);s.push(a)}this._activeMoles=G(s),setTimeout(()=>{this._isPlaying&&(this._activeMoles=new Array(l*l).fill(!1))},i)},t)}_stopLoop(){this._intervalId&&clearInterval(this._intervalId),this._intervalId=null,this._activeMoles=[]}_startTimer(){this._clearTimer(),this._timerId=window.setInterval(()=>{this._timeLeft--,this._timeLeft<=0&&(this._isPlaying=!1,this._stopLoop(),this._saveHighScore(),this._clearTimer(),this._timeLeft=Number(this._selectedTime),this._score=0)},1e3)}_clearGame(){this._isPlaying=!1,this._stopLoop(),this._clearTimer(),this._score=0,this._timeLeft=Number(this._selectedTime),this._activeMoles=new Array(l*l).fill(!1),this._molesMode=p.ONE}_goBack(){this._clearGame(),this.navigate("home")}_getLevel(e){this.level=e.detail.value,this._isPlaying&&(this._stopLoop(),this._startLoop())}_getTime(e){this.time=e.detail.value,this._selectedTime=this.time,this._clearGame()}render(){return v`
+    `}};g.styles=U;P([m({type:String})],g.prototype,"playerName",2);P([m({type:String})],g.prototype,"level",2);P([m({type:String})],g.prototype,"time",2);g=P([b("game-header")],g);var _=(e=>(e[e.ONE=1]="ONE",e[e.TWO=2]="TWO",e))(_||{}),q=Object.defineProperty,J=Object.getOwnPropertyDescriptor,c=(e,t,i,r)=>{for(var s=r>1?void 0:r?J(t,i):t,a=e.length-1,o;a>=0;a--)(o=e[a])&&(s=(r?o(t,i,s):o(s))||s);return r&&s&&q(t,i,s),s};let n=class extends I(S(y)){constructor(){super(...arguments),this._playerName="",this._level=h.LOW,this._time=String(d.SHORT),this._score=0,this._isPlaying=!1,this._activeMoles=new Array(l*l).fill(!1),this._molesMode=_.ONE,this._selectedTime=String(d.SHORT),this._timeLeft=d.SHORT,this._intervalId=null,this._timerId=null}firstUpdated(){var i;const e=(i=this.params)==null?void 0:i.playerName,t=localStorage.getItem("playerName");this._playerName=e||t||"Player",this._selectedTime=this._time,this._timeLeft=Number(this._time)}connectedCallback(){super.connectedCallback(),this.subscribe("player-name",e=>{this._playerName=e})}disconnectedCallback(){this.unsubscribe("player-name"),super.disconnectedCallback()}_handleMoleHit(e){var t;if(this._isPlaying&&((t=e.detail)!=null&&t.active)){const{points:i}=T(this._level);this._score+=i}}_clearTimer(){this._timerId&&clearInterval(this._timerId),this._timerId=null}_controlMolesMode(){this._molesMode=this._molesMode===_.ONE?_.TWO:_.ONE}_saveHighScore(){H(this._playerName,this._score,this._selectedTime)}_controllerGame(){this._isPlaying=!this._isPlaying,this._isPlaying?(this._startLoop(),this._startTimer()):(this._stopLoop(),this._clearTimer())}_startLoop(){const t=T(this._level).interval,i=Math.max(0,t-100);this._intervalId=window.setInterval(()=>{if(!this._isPlaying)return;const r=x(),s=[r];if(this._molesMode===_.TWO){let a;do a=x();while(a===r);s.push(a)}this._activeMoles=G(s),setTimeout(()=>{this._isPlaying&&(this._activeMoles=new Array(l*l).fill(!1))},i)},t)}_stopLoop(){this._intervalId&&clearInterval(this._intervalId),this._intervalId=null,this._activeMoles=[]}_startTimer(){this._clearTimer(),this._timerId=window.setInterval(()=>{this._timeLeft--,this._timeLeft<=0&&(this._isPlaying=!1,this._stopLoop(),this._saveHighScore(),this._clearTimer(),this._timeLeft=Number(this._selectedTime),this._score=0)},1e3)}_clearGame(){this._isPlaying=!1,this._stopLoop(),this._clearTimer(),this._score=0,this._timeLeft=Number(this._selectedTime),this._activeMoles=new Array(l*l).fill(!1),this._molesMode=_.ONE}_goBack(){this._clearGame(),this.navigate("home")}_getLevel(e){this._level=e.detail.value,this._isPlaying&&(this._stopLoop(),this._startLoop())}_getTime(e){this._time=e.detail.value,this._selectedTime=this._time,this._clearGame()}render(){return v`
       <game-header
         .playerName=${this._playerName}
-        .level=${this.level}
-        .time=${this.time}
+        .level=${this._level}
+        .time=${this._time}
         @header-level=${this._getLevel}
         @header-time=${this._getTime}
       ></game-header>
@@ -207,7 +207,7 @@ import{i as O,n as c,a as y,x as v,t as b,r as _}from"./index-TZp76wuM.js";impor
         ></mole-table>
         <game-button
           style="margin-top: 1rem;"
-          text="${this._molesMode===p.ONE?"1 Topo":"2 Topos"}"
+          text="${this._molesMode===_.ONE?"1 Topo":"2 Topos"}"
           @game-click=${this._controlMolesMode}
         ></game-button>
         <game-button
@@ -216,4 +216,4 @@ import{i as O,n as c,a as y,x as v,t as b,r as _}from"./index-TZp76wuM.js";impor
           @game-click=${this._controllerGame}
         ></game-button>
       </page-layout>
-    `}};m([_()],n.prototype,"_playerName",2);m([_()],n.prototype,"level",2);m([c({type:String})],n.prototype,"time",2);m([_()],n.prototype,"_score",2);m([_()],n.prototype,"_isPlaying",2);m([_()],n.prototype,"_activeMoles",2);m([_()],n.prototype,"_molesMode",2);m([_()],n.prototype,"_selectedTime",2);m([_()],n.prototype,"_timeLeft",2);n=m([b("game-page")],n);export{n as GamePage};
+    `}};c([p()],n.prototype,"_playerName",2);c([p()],n.prototype,"_level",2);c([p()],n.prototype,"_time",2);c([p()],n.prototype,"_score",2);c([p()],n.prototype,"_isPlaying",2);c([p()],n.prototype,"_activeMoles",2);c([p()],n.prototype,"_molesMode",2);c([p()],n.prototype,"_selectedTime",2);c([p()],n.prototype,"_timeLeft",2);n=c([b("game-page")],n);export{n as GamePage};

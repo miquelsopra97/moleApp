@@ -21,12 +21,6 @@ export class PageLayout extends LitElement {
 
   static readonly styles = styles;
 
-  /**
-   * Lifecycle method executed after the component’s template is first rendered. Sets up the scroll
-   * listener and publishes scroll positions via the ElementController.
-   *
-   * @param {any} props - Previously changed properties.
-   */
   firstUpdated(props: any) {
     super.firstUpdated(props);
 
@@ -39,12 +33,6 @@ export class PageLayout extends LitElement {
     });
   }
 
-  /**
-   * Clean-up performed when the element is detached from the DOM:
-   *
-   * - Removes the scroll listener
-   * - Unsubscribes from controller events
-   */
   disconnectedCallback() {
     this._scroller?.removeEventListener('scroll', (ev) => {
       this.elementController.publish('scroll', {
@@ -70,7 +58,6 @@ export class PageLayout extends LitElement {
     `;
   }
 
-  /** Resets the scrollable container back to the top. Public utility method to be called externally. */
   resetScroll() {
     this._scroller?.scrollTo(0, 0);
   }

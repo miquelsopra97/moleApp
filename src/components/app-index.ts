@@ -1,7 +1,6 @@
 import { startApp } from '@open-cells/core';
 import { LitElement, html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
-import { ElementController } from '@open-cells/element-controller';
 import { routes } from '../router/routes.js';
 import { styles } from './app-index.css.js';
 
@@ -23,50 +22,49 @@ startApp({
 
 @customElement('app-index')
 export class AppIndex extends LitElement {
-  /**
-   * Global ElementController (OpenCells). Used only to subscribe to the `player-name` event
-   * dispatched by other pages.
-   */
-  private readonly controller: ElementController = new ElementController(this);
-
   static styles = styles;
 
-  /** Current route extracted from the URL hash. Updated whenever the hash changes. */
-  @state()
-  private currentRoute: string = this.getRoute();
-
   /**
-   * Lifecycle: component attached to the DOM.
+   * Current route extracted from the URL hash.
    *
-   * - Loads saved player name
-   * - Subscribes to the global `player-name` event
-   * - Sets up a listener for hash-based navigation
+   * This value determines whether the top header is shown. Example hashes: #!/home → "home" #!/game
+   * → "game"
    */
+  @state()
+  private currentRoute: string = this._getRoute();
+
   connectedCallback() {
     super.connectedCallback();
     globalThis.addEventListener('hashchange', this._onHashChange);
   }
 
-  /** Lifecycle: component removed from the DOM. Cleans event listeners and controller subscriptions. */
   disconnectedCallback() {
     globalThis.removeEventListener('hashchange', this._onHashChange);
-    this.controller.unsubscribe('player-name');
     super.disconnectedCallback();
   }
 
-  /** Triggered whenever the URL hash changes. Updates the current route accordingly. */
+  /**
+   * Handler for browser hash changes. Updates the `currentRoute` state property.
+   *
+   * @private
+   */
   private readonly _onHashChange = () => {
-    this.currentRoute = this.getRoute();
+    this.currentRoute = this._getRoute();
   };
 
   /**
-   * Extracts the active route from the URL hash.
+   * Extracts the active application route from the URL hash.
    *
-   * Examples: #!/home → "home" #!/game → "game"
+   * @private
+   * @returns {string} Route name extracted from the hash (defaults to `"home"`).
    *
-   * If no match is found, "home" is returned by default.
+   *   Examples:
+   *
+   *   - `#!/home` → `"home"`
+   *   - `#!/game` → `"game"`
+   *   - No hash → `"home"`
    */
-  private getRoute() {
+  private _getRoute(): string {
     const hash = globalThis.location.hash || '';
     const match = /^#!\/([^?]*)/.exec(hash);
     return match?.[1] || 'home';
@@ -74,7 +72,6 @@ export class AppIndex extends LitElement {
 
   render() {
     const isHome = this.currentRoute === 'home';
-
     return html`
       ${isHome
         ? html`
@@ -83,7 +80,6 @@ export class AppIndex extends LitElement {
             </header>
           `
         : undefined}
-
       <main>
         <slot></slot>
       </main>

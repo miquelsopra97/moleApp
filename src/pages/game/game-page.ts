@@ -1,21 +1,5 @@
-/**
- * <game-page>
- *
- * Main gameplay view of Mole Game. Handles:
- *
- * - Game loop (mole intervals)
- * - Countdown timer
- * - Score calculation
- * - Difficulty / time settings
- * - Player name handling
- * - Navigation back to home
- *
- * This component is a full state machine: it manages its own timers, grid state, difficulty
- * configuration and event communication with <game-header>.
- */
-
 import { LitElement, html } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { customElement, state } from 'lit/decorators.js';
 import { PageMixin } from '@open-cells/page-mixin';
 import { PageTransitionsMixin } from '@open-cells/page-transitions';
 
@@ -55,16 +39,16 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
    * @type {DifficultyLevel}
    */
   @state()
-  private level: DifficultyLevel = DifficultyLevel.LOW;
+  private _level: DifficultyLevel = DifficultyLevel.LOW;
 
   /**
-   * Duration of the match in seconds. Must be @property because navigation can provide it.
+   * Duration of the match in seconds. Must be @state because navigation can provide it.
    *
    * @type {string}
    * @public
    */
-  @property({ type: String })
-  time: string = String(TimeMode.SHORT);
+  @state()
+  _time: string = String(TimeMode.SHORT);
 
   /**
    * Current score of the active match.
@@ -142,8 +126,8 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
 
     this._playerName = paramName || saved || 'Player';
 
-    this._selectedTime = this.time;
-    this._timeLeft = Number(this.time);
+    this._selectedTime = this._time;
+    this._timeLeft = Number(this._time);
   }
 
   connectedCallback() {
@@ -168,7 +152,7 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
    */
   private _handleMoleHit(e: CustomEvent) {
     if (this._isPlaying && e.detail?.active) {
-      const { points } = getMoleSettings(this.level);
+      const { points } = getMoleSettings(this._level);
       this._score += points;
     }
   }
@@ -228,7 +212,7 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
    * @private
    */
   private _startLoop() {
-    const settings = getMoleSettings(this.level);
+    const settings = getMoleSettings(this._level);
     const interval = settings.interval;
     const hideTime = Math.max(0, interval - 100);
 
@@ -330,7 +314,7 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
    * @param {CustomEvent<{ value: DifficultyLevel }>} e
    */
   private _getLevel(e: CustomEvent) {
-    this.level = e.detail.value;
+    this._level = e.detail.value;
 
     if (this._isPlaying) {
       this._stopLoop();
@@ -345,8 +329,8 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
    * @param {CustomEvent<{ value: string }>} e
    */
   private _getTime(e: CustomEvent) {
-    this.time = e.detail.value;
-    this._selectedTime = this.time;
+    this._time = e.detail.value;
+    this._selectedTime = this._time;
     this._clearGame();
   }
 
@@ -354,8 +338,8 @@ export class GamePage extends PageTransitionsMixin(PageMixin(LitElement)) {
     return html`
       <game-header
         .playerName=${this._playerName}
-        .level=${this.level}
-        .time=${this.time}
+        .level=${this._level}
+        .time=${this._time}
         @header-level=${this._getLevel}
         @header-time=${this._getTime}
       ></game-header>

@@ -63,11 +63,4 @@ describe('app-index', () => {
 
     expect(el.currentRoute).toBe('game');
   });
-
-  it('removes subscription to player-name on disconnectedCallback', async () => {
-    await create();
-    el.remove();
-
-    expect(unsubscribeMock).toHaveBeenCalledWith('player-name');
-  });
 });

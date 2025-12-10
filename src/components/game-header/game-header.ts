@@ -28,7 +28,7 @@ export class GameHeader extends LitElement {
    *
    * @returns {string} Uppercase first character of `playerName`.
    */
-  private get initial(): string {
+  private get _initial(): string {
     return (this.playerName || 'P')[0].toUpperCase();
   }
 
@@ -74,7 +74,7 @@ export class GameHeader extends LitElement {
     return html`
       <header class="header">
         <div class="header__left">
-          <div class="avatar">${this.initial}</div>
+          <div class="avatar">${this._initial}</div>
           <span class="player">${this.playerName}</span>
         </div>
 
