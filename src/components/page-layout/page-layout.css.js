@@ -22,7 +22,7 @@ export const styles = css`
     flex: 1;
     display: flex;
     flex-direction: column;
-    padding-top: 6rem;
+    padding-top: 2rem;
   }
 
   .region {

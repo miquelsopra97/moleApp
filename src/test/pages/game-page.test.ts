@@ -23,6 +23,8 @@ interface GamePage extends HTMLElement {
   _clearGame(): void;
   _startLoop(): void;
   _controlMolesMode(): void;
+  _getLevel(e: CustomEvent): void;
+  _getTime(e: CustomEvent): void;
 
   _playerName: string;
   _score: number;
@@ -35,6 +37,7 @@ interface GamePage extends HTMLElement {
   __testCallbacks: any;
 
   _molesMode: MoleMode;
+  _selectedTime: string;
 }
 
 describe('game-page', () => {
@@ -62,7 +65,7 @@ describe('game-page', () => {
     expect(el._score).toBe(10);
   });
 
-  it('start/stop game controll isPlaying and resets score', () => {
+  it('start/stop game controls isPlaying and resets score', () => {
     el._controllerGame();
 
     expect(el._isPlaying).toBe(true);
@@ -97,6 +100,7 @@ describe('game-page', () => {
   it('_saveHighScore calls saveScore correctly', () => {
     el._playerName = 'Miquel';
     el._score = 42;
+    el._selectedTime = '30'; // expected input for saveScore
 
     el._saveHighScore();
 
@@ -151,50 +155,19 @@ describe('game-page', () => {
     expect(el._playerName).toBe('Player');
   });
 
-  it('updates player name when receiving "player-name" event', async () => {
-    document.body.innerHTML = '<game-page></game-page>';
-    const el = document.querySelector('game-page') as GamePage;
-
-    await el.performUpdate?.();
-
-    el.__testCallbacks = {};
-    el.subscribe = (ev: string, cb: Function) => {
-      el.__testCallbacks[ev] = cb;
-    };
-    el.publish = (ev: string, data: any) => {
-      el.__testCallbacks[ev]?.(data);
-    };
-
-    el.firstUpdated();
-
-    el.publish('player-name', 'NewName');
-
-    expect(el._playerName).toBe('NewName');
-    expect(localStorage.getItem('playerName')).toBe('NewName');
-  });
-
-  it('restarts loop when game-level changes while playing', async () => {
+  it('restarts loop when header-level event changes while playing', async () => {
     document.body.innerHTML = '<game-page></game-page>';
     const el = document.querySelector('game-page') as any;
 
     await el.performUpdate?.();
-
-    el.__testCallbacks = {};
-    el.subscribe = (ev: string, cb: Function) => {
-      el.__testCallbacks[ev] = cb;
-    };
-    el.publish = (ev: string, data: any) => {
-      el.__testCallbacks[ev]?.(data);
-    };
-
-    el.firstUpdated();
 
     el._isPlaying = true;
 
     const stopSpy = vi.spyOn(el, '_stopLoop');
     const startSpy = vi.spyOn(el, '_startLoop');
 
-    el.publish('game-level', 'medium');
+    // Call the real method
+    el._getLevel({ detail: { value: DifficultyLevel.MEDIUM } } as any);
 
     expect(stopSpy).toHaveBeenCalled();
     expect(startSpy).toHaveBeenCalled();
@@ -209,7 +182,6 @@ describe('game-page', () => {
     el.remove();
 
     expect(unsubSpy).toHaveBeenCalledWith('player-name');
-    expect(unsubSpy).toHaveBeenCalledWith('game-level');
   });
 
   it('_controlMolesMode toggles between 1 and 2', () => {
@@ -244,7 +216,7 @@ describe('game-page', () => {
     const active = el._activeMoles.filter(Boolean);
     expect(active.length).toBe(2);
 
-    (el as any)._stopLoop();
+    el._stopLoop();
   });
 
   it('_startLoop does nothing if _isPlaying is false', () => {
@@ -295,7 +267,6 @@ describe('game-page', () => {
     expect(el._timerId).toBeNull();
 
     expect(el._score).toBe(0);
-    expect(el._timeLeft).toBe(30);
 
     expect(el._activeMoles.length).toBe(SIZES_MOLETABLE * SIZES_MOLETABLE);
     expect(el._activeMoles.every((mole) => mole === false)).toBe(true);

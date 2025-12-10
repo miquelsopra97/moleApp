@@ -3,5 +3,5 @@ projectKey=miquelsopra97_moleapp
 serverUrl=https://sonarcloud.io
 serverVersion=8.0.0.77221
 dashboardUrl=https://sonarcloud.io/dashboard?id=miquelsopra97_moleapp
-ceTaskId=AZsEshzsmLKmzMxmUYy2
-ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AZsEshzsmLKmzMxmUYy2
+ceTaskId=AZsFvrVy7VVhG2BD-otZ
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AZsFvrVy7VVhG2BD-otZ

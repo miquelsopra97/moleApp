@@ -87,9 +87,7 @@ export class FormGame extends LitElement {
           .error=${this._error}
           @game-input=${this._onInput}
         ></game-input>
-
         <game-button text="Empezar Juego" @game-click=${this._onSubmit}></game-button>
-
         <game-button text="Ver Resultados" @game-click=${this._goToScore}></game-button>
       </div>
     `;

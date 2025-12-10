@@ -89,7 +89,6 @@ export class GameInput extends LitElement {
           @input=${this._onInput}
           required
         />
-
         ${this.error
           ? html`
               <span class="field__error">${this.error}</span>

@@ -60,7 +60,7 @@ export class HomePage extends PageTransitionsMixin(PageMixin(LitElement)) {
     return html`
       <page-layout>
         <form-game
-          style="padding-top:2rem"
+          style="padding-top:6rem"
           @form-submit=${this._startGame}
           @go-score=${() => this.navigate('score')}
         ></form-game>

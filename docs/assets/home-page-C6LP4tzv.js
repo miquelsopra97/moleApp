@@ -1,4 +1,4 @@
-import{i as b,n as c,a as f,x as n,t as _,r as h}from"./index-CvD2QKtG.js";import{P as v}from"./PageTransitionsMixin-C3JExxZE.js";import{P as y}from"./game-button-B_Pf1vqO.js";const $=b`
+import{i as b,n as c,a as f,x as n,t as _,r as h}from"./index-TZp76wuM.js";import{P as v}from"./PageTransitionsMixin-C3JExxZE.js";import{P as y}from"./game-button-CO_Y6CyP.js";const $=b`
   :host {
     display: block;
     margin-bottom: 1rem;
@@ -60,7 +60,6 @@ import{i as b,n as c,a as f,x as n,t as _,r as h}from"./index-CvD2QKtG.js";impor
           @input=${this._onInput}
           required
         />
-
         ${this.error?n`
               <span class="field__error">${this.error}</span>
             `:null}
@@ -90,15 +89,13 @@ import{i as b,n as c,a as f,x as n,t as _,r as h}from"./index-CvD2QKtG.js";impor
           .error=${this._error}
           @game-input=${this._onInput}
         ></game-input>
-
         <game-button text="Empezar Juego" @game-click=${this._onSubmit}></game-button>
-
         <game-button text="Ver Resultados" @game-click=${this._goToScore}></game-button>
       </div>
     `}};u.styles=w;d([h()],u.prototype,"_value",2);d([h()],u.prototype,"_error",2);u=d([_("form-game")],u);var j=Object.defineProperty,E=Object.getOwnPropertyDescriptor,g=(t,e,a,o)=>{for(var r=o>1?void 0:o?E(e,a):e,l=t.length-1,s;l>=0;l--)(s=t[l])&&(r=(o?s(e,a,r):s(r))||r);return o&&r&&j(e,a,r),r};let m=class extends v(y(f)){constructor(){super(...arguments),this._playerName="",this._error=null}firstUpdated(t){var e;(e=super.firstUpdated)==null||e.call(this,t),this._layout=this.renderRoot.querySelector("page-layout")}_startGame(t){const e=t.detail.value;localStorage.setItem("playerName",e),this.publish("player-name",e),this.navigate("game",{playerName:e})}render(){return n`
       <page-layout>
         <form-game
-          style="padding-top:2rem"
+          style="padding-top:6rem"
           @form-submit=${this._startGame}
           @go-score=${()=>this.navigate("score")}
         ></form-game>

@@ -69,7 +69,6 @@ export class MoleTable extends LitElement {
       <div class="grid" style="grid-template-columns: repeat(${this.size}, 1fr);">
         ${[...new Array(this._totalCells).keys()].map((index) => {
           const isActive = this.activeMoles?.[index] ?? false;
-
           return html`
             <mole-button
               .active=${isActive}

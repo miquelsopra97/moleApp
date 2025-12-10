@@ -59,7 +59,7 @@ export class MoleButton extends LitElement {
           ? html`
               <img class="mole-img" src="${moleImg}" alt="Mole" />
             `
-          : ''}
+          : undefined}
       </button>
     `;
   }
