@@ -98,18 +98,14 @@ export class GameHeader extends LitElement {
           <div class="avatar">${this._initial}</div>
           <span class="player">${this.playerName}</span>
         </div>
-
         <div class="header__right">
           <span class="label">Nivel</span>
-
           <game-select
             .value=${this.level}
             .options=${[DifficultyLevel.LOW, DifficultyLevel.MEDIUM, DifficultyLevel.HIGH]}
             @level-change=${this._onLevel}
           ></game-select>
-
           <span class="label" style="margin-left:1rem;">Tiempo</span>
-
           <game-select
             type="time"
             .value=${this.time}

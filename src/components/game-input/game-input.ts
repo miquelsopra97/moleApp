@@ -80,7 +80,6 @@ export class GameInput extends LitElement {
               <span class="field__label">${this.label}</span>
             `
           : null}
-
         <input
           class="field__control"
           type="text"

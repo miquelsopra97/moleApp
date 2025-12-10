@@ -1,4 +1,4 @@
-import{i as b,n as c,a as f,x as n,t as _,r as h}from"./index-CHk-AC9J.js";import{P as v}from"./ElementController-DkYO4R2Y.js";import{P as y}from"./game-button-6JjFM17g.js";const $=b`
+import{i as b,n as c,a as f,x as n,t as _,r as h}from"./index-t1JcGcX8.js";import{P as v}from"./ElementController-B_Sf-sCM.js";import{P as y}from"./game-button-DpOeyJal.js";const $=b`
   :host {
     display: block;
     margin-bottom: 1rem;
@@ -51,7 +51,6 @@ import{i as b,n as c,a as f,x as n,t as _,r as h}from"./index-CHk-AC9J.js";impor
         ${this.label?n`
               <span class="field__label">${this.label}</span>
             `:null}
-
         <input
           class="field__control"
           type="text"

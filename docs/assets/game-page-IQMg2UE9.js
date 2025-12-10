@@ -1,4 +1,4 @@
-import{i as O,n as m,a as y,x as v,t as b,r as p}from"./index-CHk-AC9J.js";import{P as S}from"./game-button-6JjFM17g.js";import{P as I}from"./ElementController-DkYO4R2Y.js";import{s as H}from"./score-config.config-D_er6gHQ.js";const C=O`
+import{i as O,n as m,a as y,x as v,t as b,r as p}from"./index-t1JcGcX8.js";import{P as S}from"./game-button-DpOeyJal.js";import{P as I}from"./ElementController-B_Sf-sCM.js";import{s as H}from"./score-config.config-D_er6gHQ.js";const C=O`
   :host {
     display: block;
     width: fit-content;
@@ -155,18 +155,14 @@ import{i as O,n as m,a as y,x as v,t as b,r as p}from"./index-CHk-AC9J.js";impor
           <div class="avatar">${this._initial}</div>
           <span class="player">${this.playerName}</span>
         </div>
-
         <div class="header__right">
           <span class="label">Nivel</span>
-
           <game-select
             .value=${this.level}
             .options=${[h.LOW,h.MEDIUM,h.HIGH]}
             @level-change=${this._onLevel}
           ></game-select>
-
           <span class="label" style="margin-left:1rem;">Tiempo</span>
-
           <game-select
             type="time"
             .value=${this.time}
