@@ -9,17 +9,38 @@ export class GameHeader extends LitElement {
   static styles = styles;
 
   /**
-   * The name of the player displayed in the header. If empty, it defaults to `"Player"`. Passed
-   * from <game-page>.
+   * Player name displayed in the header.
+   *
+   * - Received from `<game-page>`
+   * - Used to show both the avatar initial and the player's full name
+   * - Defaults to `"Player"` when no name is provided
+   *
+   * @type {string}
    */
   @property({ type: String })
   playerName: string = 'Player';
 
-  /** Current difficulty level displayed and selectable in the header. Passed from <game-page>. */
+  /**
+   * Current difficulty level selected in the game.
+   *
+   * - Received from `<game-page>`
+   * - Determines mole speed and scoring behavior
+   * - Uses the `DifficultyLevel` enum
+   *
+   * @type {DifficultyLevel}
+   */
   @property({ type: String })
   level: DifficultyLevel = DifficultyLevel.LOW;
 
-  /** Current game duration in seconds. Passed from <game-page>. */
+  /**
+   * Current game duration (in seconds).
+   *
+   * - Received from `<game-page>`
+   * - Used by the countdown timer
+   * - Value comes as a string because it is bound to a `<select>`
+   *
+   * @type {string}
+   */
   @property({ type: String })
   time: string = String(TimeMode.SHORT);
 
